@@ -1,0 +1,110 @@
+name: ci-rapido
+
+# ============================================================================
+# O MESMO REPO, CONSERTADO. Dois consertos, e so isso:
+#
+#   1. PATH FILTER -- o job `detectar` le o diff do PR e diz quais pacotes
+#      mudaram. Os outros tres so rodam se o seu pacote estiver na lista
+#      (`needs` + `if`). Quem nao roda aparece como SKIPPED, nao como falha.
+#
+#   2. CACHE -- `cache: npm` no setup-node. O install deixa de baixar as
+#      dependencias do zero em cada PR.
+#
+# A REGRA QUE IMPORTA: mexer em packages/shared/ acorda TODOS. Nao e bug do
+# filtro -- se a peca que os dois usam mudou, nao se sabe quem quebrou.
+#
+# Este workflow roda em paralelo com o ci-ingenuo de proposito: no minuto 20
+# da apresentacao, os dois resultados estao lado a lado no MESMO PR, no mesmo
+# commit. Nao precisa re-rodar nada ao vivo.
+# ============================================================================
+
+on:
+  pull_request:
+
+jobs:
+  detectar:
+    name: o que mudou neste PR?
+    runs-on: ubuntu-latest
+    outputs:
+      mural: ${{ steps.filtro.outputs.mural }}
+      api: ${{ steps.filtro.outputs.api }}
+      shared: ${{ steps.filtro.outputs.shared }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: filtro
+        name: ler o diff
+        run: |
+          BASE=$(git merge-base origin/${{ github.base_ref }} HEAD)
+          MUDOU=$(git diff --name-only "$BASE" HEAD)
+
+          echo "arquivos mudados neste PR:"
+          echo "$MUDOU" | sed 's/^/  /'
+
+          # shared mexido acorda todo mundo
+          if echo "$MUDOU" | grep -q '^packages/shared/'; then
+            echo "shared=true" >> "$GITHUB_OUTPUT"
+            echo "mural=true"  >> "$GITHUB_OUTPUT"
+            echo "api=true"    >> "$GITHUB_OUTPUT"
+            echo ">> packages/shared mudou: os 3 jobs vao rodar"
+            exit 0
+          fi
+
+          echo "shared=false" >> "$GITHUB_OUTPUT"
+
+          if echo "$MUDOU" | grep -qE '^(apps/mural/|participantes/)'; then
+            echo "mural=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "mural=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if echo "$MUDOU" | grep -q '^apps/api/'; then
+            echo "api=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "api=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  shared:
+    name: testar shared
+    needs: detectar
+    if: needs.detectar.outputs.shared == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install
+      - run: npm test -w shared
+
+  mural:
+    name: testar mural e gerar a pagina
+    needs: detectar
+    if: needs.detectar.outputs.mural == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install
+      - run: npm test -w mural
+      - run: npm run build -w mural
+
+  api:
+    name: testar api
+    needs: detectar
+    if: needs.detectar.outputs.api == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm install
+      - run: npm test -w api

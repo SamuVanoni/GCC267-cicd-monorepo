@@ -1,0 +1,50 @@
+name: ci-ingenuo
+
+# ============================================================================
+# O PIPELINE DO PRIMEIRO DIA -- ruim de proposito.
+#
+# Ele existe para a sala SENTIR o problema antes de a gente explicar: nao olha
+# o diff, nao guarda nada, e refaz tudo em toda versao do Node.
+#
+# Nao "conserte" este arquivo. Ele e metade da aula. O conserto mora em
+# ci-rapido.yml, ao lado.
+#
+# As duas escolhas que o deixam lento, e as duas sao honestas:
+#   1. nenhum cache          -> npm install baixa tudo de novo, sempre
+#   2. max-parallel: 1       -> as 3 versoes de Node rodam uma depois da outra,
+#                               como num pool de runners ocupado
+# ============================================================================
+
+on:
+  pull_request:
+
+jobs:
+  tudo:
+    name: testa o repo inteiro (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        node: ['18', '20', '22']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          # sem `cache:` -- de proposito
+
+      - name: instalar do zero
+        run: npm install
+
+      - name: testar shared
+        run: npm test -w shared
+
+      - name: testar mural
+        run: npm test -w mural
+
+      - name: testar api
+        run: npm test -w api
+
+      - name: gerar o mural
+        run: npm run build -w mural

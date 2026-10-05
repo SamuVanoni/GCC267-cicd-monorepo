@@ -1,0 +1,55 @@
+name: deploy
+
+# ============================================================================
+# O "CD" do CI/CD. Entrou na main -> a pagina vai pro ar. Sem humano no meio.
+#
+# E este workflow que faz a sala se ver no celular no minuto 23: o PR dela
+# ficou verde, o auto-merge mergeou, e isto rodou.
+#
+# Para funcionar, uma vez so, na mao:
+#   Settings > Pages > Build and deployment > Source: GitHub Actions
+# ============================================================================
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Nao deixa dois deploys brigarem: se 5 PRs entram juntos, o ultimo ganha e os
+# do meio sao cancelados. Sem isso, a pagina pode voltar para uma versao velha.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm install
+
+      - name: gerar o mural
+        run: npm run build -w mural
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/mural/dist
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

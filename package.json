@@ -1,0 +1,15 @@
+{
+  "name": "cicd-monorepo-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo do aprofundamento T05 - CI/CD em monorepo - GCC267",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm test --workspaces --if-present",
+    "build": "npm run build -w mural"
+  },
+  "license": "MIT"
+}

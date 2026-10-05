@@ -1,0 +1,7 @@
+node_modules/
+apps/mural/dist/
+.DS_Store
+
+# package-lock.json NAO entra aqui: o `cache: npm` do setup-node usa o hash dele
+# como chave. Sem lockfile versionado, o step de cache falha com
+# "Dependencies lock file is not found".
