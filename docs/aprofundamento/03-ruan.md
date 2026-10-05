@@ -59,8 +59,8 @@ A última linha do slide conecta com a rubrica:
 > setup, dobra o CI e ainda tem que sincronizar versão. Mas essa é a **resposta defendida**,
 > não a resposta certa — é exatamente o tipo de coisa que vai no ADR de vocês."
 
-(Essa última parte é de propósito: o professor escreveu *"não há resposta certa, há resposta
-defendida"*. Usar a frase dele vale ponto.)
+(Essa última parte é de propósito: o professor escreveu _"não há resposta certa, há resposta
+defendida"_. Usar a frase dele vale ponto.)
 
 ---
 
@@ -79,8 +79,8 @@ Conecta com a vida deles:
 
 > "Multiplica isso por quatro pessoas abrindo PR por quinzena durante oito quinzenas."
 
-Se perguntarem *"e se o shared mudar?"* — ótima pergunta, segura: *"é justamente o caso
-difícil, e é o próximo slide."*
+Se perguntarem _"e se o shared mudar?"_ — ótima pergunta, segura: _"é justamente o caso
+difícil, e é o próximo slide."_
 
 **60 segundos.** Uma ideia só.
 
@@ -162,7 +162,7 @@ Deixa, não slide. O Gilmar troca para o navegador.
 2. Abre o PR **`toca-o-shared`**. **Três** jobs rodando.
    > "Mexi na biblioteca que os dois usam. Agora o robô não sabe quem eu quebrei, então ele
    > testa todo mundo. E isso está certo."
-3. Devolve: *"Gilmar."*
+3. Devolve: _"Gilmar."_
 
 **Aponte a palavra "skipped" na tela com o cursor.** É a prova visual do slide anterior.
 

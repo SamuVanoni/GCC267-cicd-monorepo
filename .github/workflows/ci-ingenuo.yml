@@ -25,7 +25,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        node: ['18', '20', '22']
+        node: ["18", "20", "22", "24"]
     steps:
       - uses: actions/checkout@v4
 
@@ -36,6 +36,9 @@ jobs:
 
       - name: instalar do zero
         run: npm install
+
+      - name: conferir formatacao
+        run: npm run lint
 
       - name: testar shared
         run: npm test -w shared

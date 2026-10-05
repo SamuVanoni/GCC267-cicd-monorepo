@@ -55,7 +55,7 @@ A última frase do slide é a mais importante — **fala ela olhando pra sala**:
 **Se a sala estiver lenta:** fica mais um pouco aqui. Pergunta "quantos já conseguiram?" e
 pede pra quem conseguiu ajudar o vizinho. **Não passe adiante com 3 PRs.**
 
-Fecha: *"Julia, é sua."*
+Fecha: _"Julia, é sua."_
 
 ---
 
@@ -66,13 +66,13 @@ da pessoa.
 
 Os travamentos que vão aparecer, em ordem de frequência:
 
-| Sintoma | O que é |
-|---|---|
-| "não achei o Add file" | está na tela de código do repo, botão verde em cima à direita |
-| "commitei mas não apareceu" | commitou na main por engano, ou não clicou em Create pull request |
-| "deu erro de JSON" | vírgula sobrando na última linha, ou aspas curvas do teclado do iPhone |
-| "não abre o link" | sem conta no GitHub — manda logar, 1 minuto |
-| "o arquivo foi pra raiz" | esqueceu o `participantes/` antes do nome |
+| Sintoma                     | O que é                                                                |
+| --------------------------- | ---------------------------------------------------------------------- |
+| "não achei o Add file"      | está na tela de código do repo, botão verde em cima à direita          |
+| "commitei mas não apareceu" | commitou na main por engano, ou não clicou em Create pull request      |
+| "deu erro de JSON"          | vírgula sobrando na última linha, ou aspas curvas do teclado do iPhone |
+| "não abre o link"           | sem conta no GitHub — manda logar, 1 minuto                            |
+| "o arquivo foi pra raiz"    | esqueceu o `participantes/` antes do nome                              |
 
 **Anote mentalmente onde a sala mais travou.** Você vai usar isso no fecho, e é o detalhe
 que mostra que a interação não foi enfeite.
@@ -113,8 +113,8 @@ repositório com 3 dias de antecedência, e dizer isso na frente do professor n�
 **Os quatro ficam de pé na frente durante as perguntas.** O professor escreveu que "um
 integrante falando e três calados" não conta.
 
-Se ninguém perguntar nada, não force: *"se aparecer dúvida depois, chama qualquer um de
-nós."* Silêncio no fim é normal, e melhor que enrolação.
+Se ninguém perguntar nada, não force: _"se aparecer dúvida depois, chama qualquer um de
+nós."_ Silêncio no fim é normal, e melhor que enrolação.
 
 ---
 
