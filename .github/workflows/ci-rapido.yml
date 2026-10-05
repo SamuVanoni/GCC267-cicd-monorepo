@@ -23,7 +23,7 @@ on:
 
 jobs:
   detectar:
-    name: o que mudou neste PR?
+    name: detectar
     runs-on: ubuntu-latest
     outputs:
       mural: ${{ steps.filtro.outputs.mural }}
@@ -108,3 +108,30 @@ jobs:
           cache: 'npm'
       - run: npm install
       - run: npm test -w api
+
+  # --------------------------------------------------------------------------
+  # O JOB AGREGADOR -- e este o unico status check obrigatorio da main.
+  #
+  # Exigir `testar mural` direto travaria para sempre qualquer PR que o filtro
+  # faz pular: o job nao falha, ele nunca existe, e o GitHub espera por ele.
+  #
+  # `if: always()` e o que faz este rodar mesmo quando um dos tres pulou. Sem
+  # isso ele tambem pularia, e o problema voltaria.
+  # --------------------------------------------------------------------------
+  fim:
+    name: fim
+    needs: [detectar, shared, mural, api]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: conferir o resultado dos jobs anteriores
+        run: |
+          RESULTADOS='${{ join(needs.*.result, " ") }}'
+          echo "resultados: $RESULTADOS"
+          for r in $RESULTADOS; do
+            if [ "$r" = "failure" ] || [ "$r" = "cancelled" ]; then
+              echo "Error: um job obrigatorio nao passou ($r)"
+              exit 1
+            fi
+          done
+          echo "tudo que precisava rodar, passou"
