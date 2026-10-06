@@ -9,7 +9,12 @@
   ],
   "scripts": {
     "test": "npm test --workspaces --if-present",
-    "build": "npm run build -w mural"
+    "build": "npm run build -w mural",
+    "lint": "prettier --check \"**/*.{js,json,md,yml}\"",
+    "formatar": "prettier --write \"**/*.{js,json,md,yml}\""
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
 }

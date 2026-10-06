@@ -66,6 +66,21 @@ jobs:
             echo "api=false" >> "$GITHUB_OUTPUT"
           fi
 
+  # Lint NAO entra no path filter: prettier olha o repo inteiro, entao nao existe
+  # "pasta que mudou" para ele. Job sem `if`, sempre roda. Vale a licao: filtro
+  # serve para o que e POR PACOTE, nao para o que e do repositorio.
+  lint:
+    name: conferir formatacao
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm install
+      - run: npm run lint
+
   shared:
     name: testar shared
     needs: detectar
@@ -75,8 +90,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm install
       - run: npm test -w shared
 
@@ -89,8 +104,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm install
       - run: npm test -w mural
       - run: npm run build -w mural
@@ -104,8 +119,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
       - run: npm install
       - run: npm test -w api
 
@@ -120,13 +135,18 @@ jobs:
   # --------------------------------------------------------------------------
   fim:
     name: fim
-    needs: [detectar, shared, mural, api]
+    needs: [detectar, lint, shared, mural, api]
     if: always()
     runs-on: ubuntu-latest
     steps:
+      # O valor vem por `env`, nao interpolado no meio do shell: dentro de
+      # ${{ }} as strings do GitHub Actions usam ASPAS SIMPLES. Com aspas duplas
+      # o arquivo inteiro e recusado com "Invalid workflow file", e nenhum job
+      # chega a existir -- foi exatamente o que aconteceu no primeiro ensaio.
       - name: conferir o resultado dos jobs anteriores
+        env:
+          RESULTADOS: ${{ join(needs.*.result, ' ') }}
         run: |
-          RESULTADOS='${{ join(needs.*.result, " ") }}'
           echo "resultados: $RESULTADOS"
           for r in $RESULTADOS; do
             if [ "$r" = "failure" ] || [ "$r" = "cancelled" ]; then

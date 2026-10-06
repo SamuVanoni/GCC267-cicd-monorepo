@@ -4,7 +4,7 @@
 // Nao e bug do filtro: se a peca que os dois usam mudou, nao se sabe quem quebrou.
 
 function normalizarNome(valor) {
-  return String(valor).trim().replace(/\s+/g, ' ');
+  return String(valor).trim().replace(/\s+/g, " ");
 }
 
 function ehTemaValido(tema) {

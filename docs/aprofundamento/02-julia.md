@@ -12,7 +12,7 @@ Antes do minuto 5 você **opera o telão** para o Samuel. No minuto 12 você vir
 ## Slide 4 · minuto 05 · "O pipeline é quem diz não"
 
 **Não comece com "CI significa integração contínua".** Todo mundo já ouviu e ninguém
-lembra. Comece pelo que o pipeline *faz*.
+lembra. Comece pelo que o pipeline _faz_.
 
 > "Deixa eu dar a definição mais curta que existe. O pipeline é quem diz não. Não é um
 > assistente, não é automação pra te ajudar. É um porteiro. Ele olha o que você escreveu e
@@ -24,8 +24,8 @@ E conecta com a disciplina:
 > equipe de quatro. O professor falou isso no Encontro 1 de outra forma: main sempre verde.
 > Quem garante isso não é a boa vontade de ninguém, é o porteiro."
 
-**40 segundos.** Se alguém perguntar a diferença entre CI e CD aqui, segura: *"próximo
-slide"*.
+**40 segundos.** Se alguém perguntar a diferença entre CI e CD aqui, segura: _"próximo
+slide"_.
 
 ---
 
@@ -102,7 +102,7 @@ Isso é uma **deixa**, não um slide. O Ruan troca para o navegador, na aba de P
 **Nunca fique sem um vermelho na tela** — é nele que está a aula.
 
 **Se a internet caiu:** abre o print em `docs/aprofundamento/fallback/` e diga a verdade —
-*"a rede caiu, mas o print é do ensaio de ontem com os mesmos passos"*. Honestidade é
+_"a rede caiu, mas o print é do ensaio de ontem com os mesmos passos"_. Honestidade é
 melhor que improviso.
 
 **Máximo 90 segundos.** A aula é o próximo slide.
@@ -137,7 +137,7 @@ Fecha devolvendo o controle pra sala:
 **Dá 60 segundos de silêncio** pra galera consertar — o Samuel está circulando e é aqui que
 ele é mais necessário.
 
-Fecha: *"Ruan, pode vir."*
+Fecha: _"Ruan, pode vir."_
 
 ---
 

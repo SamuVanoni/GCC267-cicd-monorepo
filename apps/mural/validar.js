@@ -1,4 +1,4 @@
-const { normalizarNome, ehTemaValido } = require('shared');
+const { normalizarNome, ehTemaValido } = require("shared");
 
 // Valida UM arquivo de participantes/.
 // Devolve o participante normalizado, ou levanta erro dizendo o que esta errado.
@@ -7,7 +7,7 @@ const { normalizarNome, ehTemaValido } = require('shared');
 // e aqui que a sala sente o porteiro funcionando.
 
 function validar(dados, arquivo) {
-  if (dados === null || typeof dados !== 'object' || Array.isArray(dados)) {
+  if (dados === null || typeof dados !== "object" || Array.isArray(dados)) {
     throw new Error(`${arquivo}: o conteudo precisa ser um objeto JSON`);
   }
 
@@ -32,13 +32,15 @@ function validar(dados, arquivo) {
   }
 
   if (!ehTemaValido(dados.tema)) {
-    throw new Error(`${arquivo}: "tema" precisa ser de T01 a T13 (veio "${dados.tema}")`);
+    throw new Error(
+      `${arquivo}: "tema" precisa ser de T01 a T13 (veio "${dados.tema}")`,
+    );
   }
 
   return {
     nome: normalizarNome(dados.nome),
     equipe: normalizarNome(dados.equipe),
-    tema: String(dados.tema).toUpperCase()
+    tema: String(dados.tema).toUpperCase(),
   };
 }
 

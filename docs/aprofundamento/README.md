@@ -11,7 +11,8 @@ Equipe: **Gilmar Silva · Julia Ribeiro · Ruan Pablo · Samuel Vanoni**
 
 A sala abre um pull request de verdade, pelo celular, no minuto 3. O pipeline que julga
 esses PRs é **ruim de propósito** — então a sala espera. No minuto 20 mostramos o mesmo
-repositório consertado, e o que levava 4 minutos leva 20 segundos.
+repositório consertado: o pipeline ingênuo rodou **12 suítes de teste**, o consertado rodou
+**1**.
 
 **A espera é a aula.** A sala não acredita que ficou mais rápido: ela esperou.
 
@@ -22,12 +23,12 @@ Isso encaixa em dois dos formatos que o professor listou como "que funcionam":
 
 ## Papéis — ninguém fica calado
 
-| Pessoa | Fala | Opera o telão | Outra função |
-|---|---|---|---|
-| **Samuel** | 00–05 e 28–30 | — | **suporte de sala** do min 5 ao 28 |
-| **Julia** | 05–12 | — | **cronômetro** do min 12 ao 30 |
-| **Ruan** | 12–20 | 05–12 e 20–28 | — |
-| **Gilmar** | 20–28 | 00–05 e 12–20 | guarda o PR plantado |
+| Pessoa     | Fala          | Opera o telão | Outra função                       |
+| ---------- | ------------- | ------------- | ---------------------------------- |
+| **Samuel** | 00–05 e 28–30 | —             | **suporte de sala** do min 5 ao 28 |
+| **Julia**  | 05–12         | —             | **cronômetro** do min 12 ao 30     |
+| **Ruan**   | 12–20         | 05–12 e 20–28 | —                                  |
+| **Gilmar** | 20–28         | 00–05 e 12–20 | guarda o PR plantado               |
 
 **Quem fala não mexe no telão.** Nunca.
 
@@ -42,26 +43,26 @@ interrompe aos 30.
 
 ## A linha do tempo
 
-| Min | Quem | O que acontece | Slide |
-|---|---|---|---|
-| 00–02 | Samuel | Grupo e tema | 1 |
-| 02–05 | Samuel | A instrução + QR. A sala abre os PRs | 2–3 |
-| 05–07 | Julia | O pipeline é quem diz não · CI e CD | 4–5 |
-| 07–09 | Julia | O pipeline que está rodando agora | 6 |
-| 09–10 | Julia | **AO VIVO:** a parede de verde e vermelho | 7 |
-| 10–12 | Julia | Como ler um log de CI | 8 |
-| 12–13 | Ruan | Mudei um arquivo, rodou tudo | 9 |
-| 13–15 | Ruan | O que é monorepo, e o preço dele | 10 |
-| 15–16 | Ruan | O desperdício, em 3 jobs | 11 |
-| 16–18 | Ruan | **Path filter** — o slide técnico central | 12 |
-| 18 | Ruan | Cache | 13 |
-| 18–20 | Ruan | **AO VIVO:** dois commits, dois resultados | 14 |
-| 20–22 | Gilmar | "Vocês esperaram 4 minutos" · os números | 15–16 |
-| 22–23 | Gilmar | Auto-merge e branch protection | 17 |
-| 23–25 | Gilmar | **AO VIVO:** vocês estão no ar | 18 |
-| 25–26 | Gilmar | **AO VIVO:** o PR verde e errado + voto | 19 |
-| 26–28 | Gilmar | Verde não significa "está certo" | 20 |
-| 28–30 | Samuel | Três conclusões · material | 21–22 |
+| Min   | Quem   | O que acontece                             | Slide |
+| ----- | ------ | ------------------------------------------ | ----- |
+| 00–02 | Samuel | Grupo e tema                               | 1     |
+| 02–05 | Samuel | A instrução + QR. A sala abre os PRs       | 2–3   |
+| 05–07 | Julia  | O pipeline é quem diz não · CI e CD        | 4–5   |
+| 07–09 | Julia  | O pipeline que está rodando agora          | 6     |
+| 09–10 | Julia  | **AO VIVO:** a parede de verde e vermelho  | 7     |
+| 10–12 | Julia  | Como ler um log de CI                      | 8     |
+| 12–13 | Ruan   | Mudei um arquivo, rodou tudo               | 9     |
+| 13–15 | Ruan   | O que é monorepo, e o preço dele           | 10    |
+| 15–16 | Ruan   | O desperdício, em 3 jobs                   | 11    |
+| 16–18 | Ruan   | **Path filter** — o slide técnico central  | 12    |
+| 18    | Ruan   | Cache                                      | 13    |
+| 18–20 | Ruan   | **AO VIVO:** dois commits, dois resultados | 14    |
+| 20–22 | Gilmar | "Vocês esperaram" · 12 suítes contra 1     | 15–16 |
+| 22–23 | Gilmar | Auto-merge e branch protection             | 17    |
+| 23–25 | Gilmar | **AO VIVO:** vocês estão no ar             | 18    |
+| 25–26 | Gilmar | **AO VIVO:** o PR verde e errado + voto    | 19    |
+| 26–28 | Gilmar | Verde não significa "está certo"           | 20    |
+| 28–30 | Samuel | Três conclusões · material                 | 21–22 |
 
 ---
 

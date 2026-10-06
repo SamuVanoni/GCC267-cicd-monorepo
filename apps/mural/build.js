@@ -1,24 +1,24 @@
-const fs = require('fs');
-const path = require('path');
-const { validar } = require('./validar');
+const fs = require("fs");
+const path = require("path");
+const { validar } = require("./validar");
 
-const RAIZ = path.join(__dirname, '..', '..');
-const PASTA = path.join(RAIZ, 'participantes');
-const SAIDA = path.join(__dirname, 'dist');
+const RAIZ = path.join(__dirname, "..", "..");
+const PASTA = path.join(RAIZ, "participantes");
+const SAIDA = path.join(__dirname, "dist");
 
 // Escapa o que veio de fora antes de virar HTML. A pagina e publica e o conteudo
 // e de terceiros: sem isso, um nome com < > quebra o mural.
 function escapar(texto) {
   return String(texto)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 const arquivos = fs
   .readdirSync(PASTA)
-  .filter((f) => f.endsWith('.json'))
+  .filter((f) => f.endsWith(".json"))
   .sort();
 
 const participantes = [];
@@ -29,7 +29,7 @@ for (const arquivo of arquivos) {
   let dados;
 
   try {
-    dados = JSON.parse(fs.readFileSync(caminho, 'utf8'));
+    dados = JSON.parse(fs.readFileSync(caminho, "utf8"));
   } catch (e) {
     erros.push(`participantes/${arquivo}: JSON invalido -- ${e.message}`);
     continue;
@@ -50,9 +50,11 @@ for (const p of participantes) {
 }
 
 if (erros.length > 0) {
-  console.log('');
+  console.log("");
   for (const e of erros) console.log(`  FALHOU  ${e}`);
-  console.error(`\nError: ${erros.length} arquivo(s) invalido(s) em participantes/`);
+  console.error(
+    `\nError: ${erros.length} arquivo(s) invalido(s) em participantes/`,
+  );
   process.exit(1);
 }
 
@@ -61,9 +63,9 @@ const linhas = participantes
     (p) => `      <li>
         <span class="nome">${escapar(p.nome)}</span>
         <span class="meta">${escapar(p.equipe)} &middot; ${escapar(p.tema)}</span>
-      </li>`
+      </li>`,
   )
-  .join('\n');
+  .join("\n");
 
 const html = `<!doctype html>
 <html lang="pt-BR">
@@ -119,7 +121,7 @@ const html = `<!doctype html>
   <p class="contagem">${participantes.length} participante(s) no ar</p>
 ${participantes.length ? `  <ul>\n${linhas}\n  </ul>` : '  <p class="vazio">Ninguem ainda. Abra um pull request.</p>'}
   <footer>
-    Gerado pelo deploy em ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC.<br>
+    Gerado pelo deploy em ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC.<br>
     Gilmar Silva &middot; Julia Ribeiro &middot; Ruan Pablo &middot; Samuel Vanoni
   </footer>
 </main>
@@ -128,5 +130,7 @@ ${participantes.length ? `  <ul>\n${linhas}\n  </ul>` : '  <p class="vazio">Ning
 `;
 
 fs.mkdirSync(SAIDA, { recursive: true });
-fs.writeFileSync(path.join(SAIDA, 'index.html'), html, 'utf8');
-console.log(`\nmural gerado: ${participantes.length} participante(s) -> apps/mural/dist/index.html`);
+fs.writeFileSync(path.join(SAIDA, "index.html"), html, "utf8");
+console.log(
+  `\nmural gerado: ${participantes.length} participante(s) -> apps/mural/dist/index.html`,
+);

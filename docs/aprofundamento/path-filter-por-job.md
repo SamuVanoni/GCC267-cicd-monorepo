@@ -13,7 +13,7 @@ O jeito mais fácil de filtrar é o nativo:
 on:
   pull_request:
     paths:
-      - 'apps/mural/**'
+      - "apps/mural/**"
 ```
 
 Funciona, mas ele filtra o **workflow inteiro**. Se você tem três jobs no mesmo arquivo e
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0        # sem isso não há histórico para comparar
+          fetch-depth: 0 # sem isso não há histórico para comparar
       - id: filtro
         run: |
           BASE=$(git merge-base origin/${{ github.base_ref }} HEAD)
@@ -54,9 +54,9 @@ jobs:
 **2. Os jobs de verdade dependem dele com `needs` e se protegem com `if`.**
 
 ```yaml
-  mural:
-    needs: detectar
-    if: needs.detectar.outputs.mural == 'true'
+mural:
+  needs: detectar
+  if: needs.detectar.outputs.mural == 'true'
 ```
 
 **3. A regra do pacote compartilhado vem antes de tudo.** Se `packages/shared/` mudou, os
@@ -64,11 +64,11 @@ três saem `true` e o filtro nem olha o resto.
 
 ### Três detalhes que custam tempo se você descobrir sozinho
 
-| Detalhe | Por quê |
-|---|---|
-| `fetch-depth: 0` | o checkout padrão traz 1 commit; sem histórico não existe `merge-base` |
-| `merge-base`, não `HEAD~1` | o PR pode ter 7 commits, ou a base pode ter andado |
-| `outputs` são **string** | `== 'true'` com aspas. Em YAML, `== true` compara com booleano e não casa |
+| Detalhe                    | Por quê                                                                   |
+| -------------------------- | ------------------------------------------------------------------------- |
+| `fetch-depth: 0`           | o checkout padrão traz 1 commit; sem histórico não existe `merge-base`    |
+| `merge-base`, não `HEAD~1` | o PR pode ter 7 commits, ou a base pode ter andado                        |
+| `outputs` são **string**   | `== 'true'` com aspas. Em YAML, `== true` compara com booleano e não casa |
 
 ---
 
@@ -77,23 +77,23 @@ três saem `true` e o filtro nem olha o resto.
 A mesma coisa, com menos shell:
 
 ```yaml
-  detectar:
-    runs-on: ubuntu-latest
-    outputs:
-      mural: ${{ steps.f.outputs.mural }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: f
-        with:
-          filters: |
-            mural:
-              - 'apps/mural/**'
-              - 'participantes/**'
-              - 'packages/shared/**'
-            api:
-              - 'apps/api/**'
-              - 'packages/shared/**'
+detectar:
+  runs-on: ubuntu-latest
+  outputs:
+    mural: ${{ steps.f.outputs.mural }}
+  steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: f
+      with:
+        filters: |
+          mural:
+            - 'apps/mural/**'
+            - 'participantes/**'
+            - 'packages/shared/**'
+          api:
+            - 'apps/api/**'
+            - 'packages/shared/**'
 ```
 
 **Por que não usamos na apresentação:** com `git diff` dá pra ver o que está acontecendo, e
@@ -117,15 +117,15 @@ Duas saídas:
 2. **Job `fim` que agrega**, e é ele o obrigatório:
 
 ```yaml
-  fim:
-    needs: [mural, api, shared]
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          if echo '${{ join(needs.*.result, ",") }}' | grep -q failure; then
-            exit 1
-          fi
+fim:
+  needs: [mural, api, shared]
+  if: always()
+  runs-on: ubuntu-latest
+  steps:
+    - run: |
+        if echo '${{ join(needs.*.result, ",") }}' | grep -q failure; then
+          exit 1
+        fi
 ```
 
 O `if: always()` é o que faz ele rodar mesmo quando um dos três pulou; sem isso ele também
@@ -152,6 +152,7 @@ cachear:
 
   Invertido, qualquer mudança de uma linha de código invalida o install inteiro. É o mesmo
   erro do `ci-ingenuo`, dentro do Dockerfile.
+
 - **Um job de build por serviço**, cada um com o seu filtro. É aí que "dois serviços
   implantáveis sozinhos" deixa de ser slide e passa a ser verdade no pipeline.
 

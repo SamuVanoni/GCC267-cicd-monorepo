@@ -51,13 +51,13 @@ docs/aprofundamento/
 
 ## Os dois pipelines, que são a aula
 
-| | `ci-ingenuo` | `ci-rapido` |
-|---|---|---|
-| olha o diff? | não | sim — job `detectar` |
-| cache | nenhum | `cache: npm` |
-| jobs | 1 job × 3 versões de Node, em série | 1 a 3 jobs, só os afetados |
-| mudar um `.json` | roda os 3 pacotes, 3 vezes | roda só o mural |
-| mudar `packages/shared/` | roda tudo | roda tudo — **e está certo** |
+|                          | `ci-ingenuo`                        | `ci-rapido`                  |
+| ------------------------ | ----------------------------------- | ---------------------------- |
+| olha o diff?             | não                                 | sim — job `detectar`         |
+| cache                    | nenhum                              | `cache: npm`                 |
+| jobs                     | 1 job × 4 versões de Node, em série | 1 a 3 jobs, só os afetados   |
+| mudar um `.json`         | roda os 3 pacotes, 4 vezes          | roda só o mural              |
+| mudar `packages/shared/` | roda tudo                           | roda tudo — **e está certo** |
 
 Os dois rodam no mesmo PR, de propósito: no minuto 20 da apresentação os dois resultados
 estão lado a lado, no mesmo commit. Nenhuma demo ao vivo depende de re-rodar nada.
