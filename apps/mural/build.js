@@ -116,8 +116,8 @@ const html = `<!doctype html>
 <main>
   <p class="tag">GCC267 &middot; Aprofundamento T05</p>
   <h1>Quem passou pelo porteiro</h1>
-  <p class="sub">Cada nome aqui veio de um pull request que ficou verde, foi
-  mergeado automaticamente e disparou este deploy. Ninguem subiu nada a mao.</p>
+  <p class="sub">Cada nome aqui veio de um pull request que ficou verde e foi
+  mergeado sozinho, sem ninguem aprovar. Ninguem subiu arquivo a mao.</p>
   <p class="contagem">${participantes.length} participante(s) no ar</p>
 ${participantes.length ? `  <ul>\n${linhas}\n  </ul>` : '  <p class="vazio">Ninguem ainda. Abra um pull request.</p>'}
   <footer>
