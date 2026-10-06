@@ -117,6 +117,20 @@ repositório com 3 dias de antecedência, e dizer isso na frente do professor n�
 **Os quatro ficam de pé na frente durante as perguntas.** O professor escreveu que "um
 integrante falando e três calados" não conta.
 
+**As três perguntas que mais provavelmente vêm, e quem responde.** Combinem isso antes:
+na arguição, hesitar custa mais caro que errar.
+
+1. _"Quanto custa rodar isso?"_ → **Gilmar:** "repositório público tem Actions de graça,
+   sem limite de minutos. Repo privado tem cota mensal. Por isso o professor pediu repo
+   público."
+2. _"Como faz isso com Docker/Compose, que é o nosso caso?"_ → **Ruan:** "mesma ideia — o
+   filtro é por pasta, não por linguagem. O que muda é que build de imagem compensa cache
+   de layer, e isso está no material."
+3. _"Isso não é over-engineering pra um projeto de faculdade?"_ → **Julia**, e é a melhor
+   pergunta pra receber: "seria, se fosse só velocidade. Mas no Encontro 8 o professor vai
+   pedir deploy e segredos fora do Git. Sem pipeline, isso vira alguém subindo arquivo a
+   mão na véspera."
+
 Se ninguém perguntar nada, não force: _"se aparecer dúvida depois, chama qualquer um de
 nós."_ Silêncio no fim é normal, e melhor que enrolação.
 
