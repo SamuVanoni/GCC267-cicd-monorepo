@@ -7,15 +7,27 @@ Antes do minuto 20 você **opera o telão** nos blocos do Samuel e do Ruan.
 
 ---
 
-## Slide 15 · minuto 20 · "Vocês esperaram 4 minutos"
+## Slide 15 · minuto 20 · "Vocês esperaram. Agora assistam."
 
-**⚠️ Confira o número antes de subir.** Tem que ser o tempo **real** que o pipeline ingênuo
-levou com os PRs da sala. O operador te passa. Se deu 2min40, fala _"quase três minutos"_.
-**Nunca invente** — tem 30 pessoas que acabaram de viver aquilo.
+**O número não está no slide, de propósito** — a lacuna é pra você **falar** o tempo real.
+O operador abre o Actions, acha a run do `ci-ingenuo` dos PRs da turma e te passa o número
+antes de você virar o slide. Combinem o gesto.
+
+**Nunca invente** — tem 30 pessoas que acabaram de viver aquela espera. Se o slide dissesse
+"4 minutos" e tivesse dado 50 segundos, você perderia a sala num segundo.
+
+**⚠️ A espera real provavelmente NÃO vai ser o tempo de uma run.** Com uns 30 PRs ao mesmo
+tempo, cada um abrindo 4 jobs em série, são ~120 jobs — isso estoura o limite de jobs
+simultâneos da conta e os PRs entram em **fila**. O que a sala sentiu foi a fila, não o
+pipeline. Se for o caso, **diga isso**, e fica até melhor:
+
+> "O pipeline de cada PR levou cinquenta segundos. Mas eram trinta PRs e cento e vinte
+> jobs, então vocês esperaram seis minutos **na fila**. Isso também é custo de CI, e
+> ninguém conta."
 
 Curto de propósito:
 
-> "Lembram do começo? Vocês mandaram o PR e ficaram esperando. Deu quatro minutos. Esse
+> "Lembram do começo? Vocês mandaram o PR e ficaram esperando. Deu [NÚMERO]. Esse
 > pipeline era **de propósito**. A gente escreveu ele ruim pra vocês sentirem. Agora o mesmo
 > repositório, com as quatro linhas do path filter e a linha do cache que o Ruan mostrou."
 
@@ -31,26 +43,46 @@ Ruan não contam a armadilha antes — **você** revela, aqui.
 **Ordem:** primeiro o slide com os números, **depois** troca pro navegador e roda ao vivo.
 Assim a sala sabe o que esperar e o suspense fica no cronômetro.
 
-> "Mesmo repositório. Mesmos testes. Mesmo PR. Só com o path filter e o cache. Olhem o
-> relógio."
+**Este slide mudou de argumento, e vale entender por quê.** A versão antiga dizia "4m12s
+contra 21s" — era chute. Medido, o nosso repo deu **47s contra 30s**: perto demais pra
+ensinar nada. Então o slide passou a liderar pelo número que é verdade em **qualquer**
+tamanho de projeto:
+
+> "Mesmo repositório. Mesmos testes. Mesmo PR — um arquivo só. O pipeline ingênuo rodou
+> **doze** suítes de teste: três pacotes, vezes quatro versões de Node. O rápido rodou
+> **uma**."
+
+Aponta a tabela:
+
+> "No relógio isso depende do tamanho do projeto. Aqui, que é um repo de brinquedo sem
+> dependência nenhuma, deu quarenta e sete contra trinta. Num projeto de verdade, com 379
+> MB de `node_modules`, o mesmo pipeline ingênuo dá dois minutos e meio e o rápido dá
+> quarenta segundos."
+
+**A vantagem prática:** se a fila do GitHub estiver lenta no dia, ou se a demo ao vivo der
+um número estranho, o argumento continua de pé. Você não depende do cronômetro.
 
 Aperta **Re-run** no PR que a sala conhece. E **fica calado enquanto roda** — 20 segundos de
 silêncio aqui valem mais que qualquer frase.
 
 Quando terminar:
 
-> "Vinte e um segundos. E o que mudou no código foram cinco linhas de YAML. Nenhuma linha
-> de teste foi apagada."
+> "E o que mudou no código foram cinco linhas de YAML. Nenhuma linha de teste foi apagada."
 
 A frase que fecha o raciocínio, e é a que separa isso de "otimização":
 
 > "Não ficou mais rápido porque a gente testou menos. Ficou mais rápido porque o robô parou
 > de testar o que não tinha mudado."
 
-**Se a demo falhar ao vivo:** não insista duas vezes. _"A fila do GitHub nos pegou"_ e mostra
-o print do ensaio. Já tem número no slide — a aula não cai.
+**Se a demo falhar ao vivo:** não insista duas vezes. _"A fila do GitHub nos pegou"_ e segue.
+Os números medidos já estão no slide — a aula não cai.
 
-**⚠️ Troque os três números pelos reais do ensaio.**
+**Se perguntarem "de onde vêm esses números":** _"medimos, com um branch descartável, e está
+documentado em `docs/aprofundamento/medicao.md`"_. Essa resposta vale mais que o número.
+
+**Se perguntarem por que no nosso repo a diferença é pequena**, a resposta é honesta e boa:
+_"porque este repo não tem dependência nenhuma, então o `npm install` dele leva 1 segundo. O
+desperdício já é de 12 pra 1; o que é pequeno aqui é o custo de cada unidade."_
 
 ---
 

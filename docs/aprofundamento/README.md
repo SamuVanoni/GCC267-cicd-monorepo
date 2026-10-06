@@ -11,7 +11,8 @@ Equipe: **Gilmar Silva · Julia Ribeiro · Ruan Pablo · Samuel Vanoni**
 
 A sala abre um pull request de verdade, pelo celular, no minuto 3. O pipeline que julga
 esses PRs é **ruim de propósito** — então a sala espera. No minuto 20 mostramos o mesmo
-repositório consertado, e o que levava 4 minutos leva 20 segundos.
+repositório consertado: o pipeline ingênuo rodou **12 suítes de teste**, o consertado rodou
+**1**.
 
 **A espera é a aula.** A sala não acredita que ficou mais rápido: ela esperou.
 
@@ -56,7 +57,7 @@ interrompe aos 30.
 | 16–18 | Ruan   | **Path filter** — o slide técnico central  | 12    |
 | 18    | Ruan   | Cache                                      | 13    |
 | 18–20 | Ruan   | **AO VIVO:** dois commits, dois resultados | 14    |
-| 20–22 | Gilmar | "Vocês esperaram 4 minutos" · os números   | 15–16 |
+| 20–22 | Gilmar | "Vocês esperaram" · 12 suítes contra 1     | 15–16 |
 | 22–23 | Gilmar | Auto-merge e branch protection             | 17    |
 | 23–25 | Gilmar | **AO VIVO:** vocês estão no ar             | 18    |
 | 25–26 | Gilmar | **AO VIVO:** o PR verde e errado + voto    | 19    |

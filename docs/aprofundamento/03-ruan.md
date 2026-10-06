@@ -12,9 +12,10 @@ Antes do minuto 12 você **opera o telão** para a Julia. Do 20 ao 28, opera par
 A sala acabou de **esperar** o pipeline lento. Seu trabalho aqui é dar nome ao que eles
 sentiram.
 
-> "Vocês acabaram de esperar. Alguém contou quanto?" (pausa) "Uns três, quatro minutos.
-> Agora pensa no que vocês mudaram: um arquivo de texto com o nome de vocês. E o robô
-> rodou os testes da API. E os do mural. E os da biblioteca compartilhada."
+> "Vocês acabaram de esperar. Alguém contou quanto?" (pausa — e aceite o número que a
+> sala der; **não diga um número você**) "Agora pensa no que vocês mudaram: um arquivo de
+> texto com o nome de vocês. E o robô rodou os testes da API. E os do mural. E os da
+> biblioteca compartilhada. Quatro vezes, uma pra cada versão de Node."
 
 A frase de fechamento, devagar:
 
@@ -126,20 +127,28 @@ A parte que mostra que você entendeu de verdade — não é só copiar YAML:
 **45 segundos.**
 
 > "Segundo conserto, e esse é quase de graça. A máquina que roda o CI nasce limpa e é
-> destruída no fim. Então sem cache ela baixa as mesmas 400 dependências em cada PR, pra
-> sempre."
+> destruída no fim. Então sem cache ela baixa as mesmas seiscentas dependências em cada PR,
+> pra sempre."
 
 Aponta a linha amarela:
 
-> "Uma linha. `cache: npm`. E o install cai de 38 segundos pra 4."
+> "Uma linha. `cache: npm`. O install cai de vinte e cinco segundos pra onze."
 
 A frase boa:
 
 > "Não é otimização prematura. É parar de pagar a mesma conta duas mil vezes."
 
-**⚠️ Troque os números pelos reais que vocês medirem no ensaio.** O Actions mostra o tempo
-de cada step. Se o professor perguntar de onde saiu e a resposta for "a gente leu na
-internet", perde credibilidade.
+**Os números são medidos**, não estimados: 603 pacotes, 379 MB, runner `ubuntu-latest`,
+05/10/2026. A medição inteira está em [`medicao.md`](medicao.md) — leia antes da aula. Se
+perguntarem de onde saiu, a resposta é _"medimos, e está documentado no repo"_.
+
+**⚠️ Não diga que o cache é a maior economia do CI.** Não é, e a gente mediu: quem economiza
+mais é o **path filter**, que nem abre o job. O cache é o mais **barato** de fazer. Essa
+distinção é o que mostra que você entendeu em vez de decorar.
+
+**Se alguém olhar o Actions do nosso repo e vir `npm install` em 1 segundo**, você já sabe a
+resposta: _"este repo é de brinquedo, não tem dependência nenhuma pra cachear. O número do
+slide é de um repo do tamanho do de vocês."_
 
 Se perguntarem como o cache sabe quando invalidar:
 

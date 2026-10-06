@@ -13,8 +13,8 @@ O mesmo repositório, o mesmo commit, os dois pipelines rodando lado a lado — 
 **só o tamanho do `node_modules`**. Nada de `sleep`, nada de inflar de propósito: as
 três linhas são três `package.json` diferentes, instalados de verdade.
 
-| `node_modules`                            | `ci-ingenuo` | `ci-rapido` | `npm install` por job |
-| ----------------------------------------- | -----------: | ----------: | --------------------: |
+| `node_modules`                             | `ci-ingenuo` | `ci-rapido` | `npm install` por job |
+| ------------------------------------------ | -----------: | ----------: | --------------------: |
 | **vazio** — é o nosso repo de demonstração |      **47s** |     **30s** |                    1s |
 | 83 MB · 151 pacotes (eslint, tsc, vitest)  |      **58s** |     **27s** |                  3–4s |
 | 379 MB · 603 pacotes (next, react, jest)   |   **2m 37s** |     **40s** |                24–29s |
@@ -43,10 +43,10 @@ mexeu.
 
 ## Os dois números do cache, medidos no mesmo job
 
-| `npm install` em `apps/mural` | tempo    |
-| ----------------------------- | -------- |
-| cache frio (primeira rodada)  | 24–29s   |
-| cache quente                  | **11s**  |
+| `npm install` em `apps/mural` | tempo   |
+| ----------------------------- | ------- |
+| cache frio (primeira rodada)  | 24–29s  |
+| cache quente                  | **11s** |
 
 O `cache: npm` corta o install **mais ou menos pela metade**. Não é mágica e não é o
 que mais economiza — quem economiza mais é o filtro, que simplesmente não abre o job.
