@@ -5,6 +5,11 @@
 
 Equipe: **Gilmar Silva · Julia Ribeiro · Ruan Pablo · Samuel Vanoni**
 
+**Os slides:** [`apresentacao-cicd-monorepo.pdf`](apresentacao-cicd-monorepo.pdf) — 22
+páginas, **sem notas do apresentador**. A fala de cada um está nas colinhas abaixo, e tudo
+o que estava só nas notas já foi movido para elas. A versão viva, para editar, está
+[no artifact](https://claude.ai/artifact/DWRgzkEawarCLkFDsmHPGg).
+
 ---
 
 ## A ideia em uma frase
