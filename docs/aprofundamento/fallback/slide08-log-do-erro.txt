@@ -1,0 +1,19 @@
+2026-10-06T12:09:58.7191265Z ##[group]Run npm run build -w mural
+2026-10-06T12:09:58.7191504Z npm run build -w mural
+2026-10-06T12:09:58.7249671Z shell: /usr/bin/bash -e {0}
+2026-10-06T12:09:58.7249870Z ##[endgroup]
+2026-10-06T12:09:58.8299476Z 
+2026-10-06T12:09:58.8300672Z > mural@1.0.0 build
+2026-10-06T12:09:58.8301546Z > node build.js
+2026-10-06T12:09:58.8301894Z 
+2026-10-06T12:09:58.8579061Z lendo participantes/ (3 arquivos)
+2026-10-06T12:09:58.8580407Z   Exemplo da Silva .......... ok
+2026-10-06T12:09:58.8580946Z   Samuel Vanoni .......... ok
+2026-10-06T12:09:58.8581419Z 
+2026-10-06T12:09:58.8581656Z Error: 1 arquivo(s) invalido(s) em participantes/
+2026-10-06T12:09:58.8581883Z 
+2026-10-06T12:09:58.8582335Z   FALHOU  participantes/exemplo-quebrado.json: "tema" precisa ser de T01 a T13 (veio "T5")
+2026-10-06T12:09:58.8625429Z npm error Lifecycle script `build` failed with error:
+2026-10-06T12:09:58.8628570Z npm error code 1
+2026-10-06T12:09:58.8629809Z npm error path /home/runner/work/GCC267-cicd-monorepo/GCC267-cicd-monorepo/apps/mural
+2026-10-06T12:09:58.8630426Z npm error workspace mural@1.0.0

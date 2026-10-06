@@ -114,7 +114,8 @@ frase: _"essa é a parte que mergeia sozinho quando o check passar"_. **No `#6` 
 não aparece**, porque ele foi aberto antes do workflow existir; não é bug, e ninguém da
 sala vai notar.
 
-**Se a internet caiu:** abre o print em `docs/aprofundamento/fallback/` e diga a verdade —
+**Se a internet caiu:** abre `fallback/slide07-lista-de-prs.png` (e, para o vermelho,
+`fallback/slide07-pr6-vermelho.png`) e diga a verdade —
 _"a rede caiu, mas o print é do ensaio de ontem com os mesmos passos"_. Honestidade é
 melhor que improviso.
 

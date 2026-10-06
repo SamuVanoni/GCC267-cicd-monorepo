@@ -182,7 +182,8 @@ Deixa, não slide. O Gilmar troca para o navegador.
 
 **Aponte a palavra "skipped" na tela com o cursor.** É a prova visual do slide anterior.
 
-**Se caiu a internet:** os dois prints estão em `docs/aprofundamento/fallback/`.
+**Se caiu a internet:** os dois prints são `fallback/slide14-pr3-dois-pulados.png` (um roda,
+dois pulam) e `fallback/slide14-pr4-shared-acorda-todos.png` (mexeu no shared, os três rodam).
 
 ---
 

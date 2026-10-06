@@ -80,7 +80,10 @@ interrompe aos 30.
 - [x] Os números reais medidos, trocados nos slides 8, 13, 15 e 16 — ver [`medicao.md`](medicao.md)
 - [x] **Auto-merge ligado** — `.github/workflows/auto-merge.yml`, testado no PR #7
 - [ ] **No slide 18, clicar em `Run workflow` no deploy** — ele **não** roda sozinho; ver abaixo
-- [ ] Prints de fallback em `docs/aprofundamento/fallback/` (a rede da faculdade vai cair)
+- [x] Prints de fallback em [`fallback/`](fallback/) — 9 prints + o log em texto, com
+      [`fallback/README.md`](fallback/README.md) dizendo qual serve a qual slide
+- [ ] **Abrir a pasta `fallback/` no celular antes de começar** — com a rede caída não
+      dá para baixar nada
 - [ ] Material publicado em `docs/aprofundamento/` **3 dias antes** — é regra da disciplina
 
 > ⚠️ **Nenhum dos quatro PRs plantados pode ser mergeado.** O `ajusta-validacao` leva um
