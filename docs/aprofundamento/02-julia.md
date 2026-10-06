@@ -1,5 +1,9 @@
 # Julia — o pipeline e o log (05–12)
 
+_Leia antes: o [índice](README.md) explica **os quatro PRs plantados** — qual serve a
+qual slide, quem abre, e que **nenhum pode ser mergeado** — e **o que fazer se a internet
+cair**. Os dois valem para todo mundo, não só para o seu bloco._
+
 > Seu bloco tem a definição **e** a parte mais útil da apresentação inteira: ensinar a sala
 > a ler um log de CI. Noventa por cento deles vai ver um X vermelho na quinzena que vem e
 > não vai saber onde clicar.

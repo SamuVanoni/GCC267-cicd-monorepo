@@ -1,5 +1,9 @@
 # Gilmar — o reveal e a pegadinha (20–28)
 
+_Leia antes: o [índice](README.md) explica **os quatro PRs plantados** — qual serve a
+qual slide, quem abre, e que **nenhum pode ser mergeado** — e **o que fazer se a internet
+cair**. Os dois valem para todo mundo, não só para o seu bloco._
+
 > Você tem o melhor momento da apresentação **e** a parte que vale nota. O reveal é o
 > espetáculo; o PR verde-e-errado é o que separa "demo legal" de aprofundamento de 15%.
 

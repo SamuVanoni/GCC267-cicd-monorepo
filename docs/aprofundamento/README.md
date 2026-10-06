@@ -66,6 +66,52 @@ interrompe aos 30.
 
 ---
 
+## Os quatro PRs plantados — o que é cada um
+
+Eles **já estão abertos** no repositório, com os checks já rodados. Ninguém cria nada ao
+vivo: é só abrir a aba certa. Cada um serve a um slide, e quem apresenta aquele slide é
+quem abre.
+
+| PR                                                              | Branch             | Slide | Quem abre | O que a sala vê                                                                                     |
+| --------------------------------------------------------------- | ------------------ | ----- | --------- | --------------------------------------------------------------------------------------------------- |
+| [#3](https://github.com/SamuVanoni/GCC267-cicd-monorepo/pull/3) | `toca-so-o-mural`  | 14    | Ruan      | Mexeu em 1 arquivo do mural: **um job roda, dois ficam _skipped_**. É o path filter funcionando.    |
+| [#4](https://github.com/SamuVanoni/GCC267-cicd-monorepo/pull/4) | `toca-o-shared`    | 14    | Ruan      | Mexeu em `packages/shared/`: **os três jobs acordam**. É o filtro sendo honesto, não falhando.      |
+| [#5](https://github.com/SamuVanoni/GCC267-cicd-monorepo/pull/5) | `ajusta-validacao` | 19    | Gilmar    | Um diff de **uma linha**, **todos os checks verdes** — e o código está errado. A sala vota.         |
+| [#6](https://github.com/SamuVanoni/GCC267-cicd-monorepo/pull/6) | `exemplo-quebrado` | 7 e 8 | Julia     | O **vermelho de reserva**: `"tema": "T5"` em vez de `"T05"`. É nele que a aula de ler log acontece. |
+
+**O #5 é o único cuja descrição não entrega o truque, e isso é de propósito:** a sala lê o
+PR durante o voto. Se alguém da equipe abrir a aba Conversation dele antes da hora e ler em
+voz alta, o slide 19 morre.
+
+**O #6 é o seguro da apresentação.** Se ninguém da turma levar vermelho — acontece — é ele
+que vira a tela dos slides 7 e 8. **Nunca fique sem um vermelho no telão.**
+
+> ⚠️ **NENHUM DOS QUATRO PODE SER MERGEADO.** O `ajusta-validacao` levaria um bug para a
+> `main` de propósito; o `exemplo-quebrado` é vermelho e nem conseguiria entrar. Depois da
+> aula, fecha os quatro **sem merge** — o GitHub guarda tudo, dá para reabrir se precisar.
+
+---
+
+## Se a internet cair
+
+A rede da faculdade vai cair, e o plano não é torcer para não cair. Os prints estão em
+[`fallback/`](fallback/), **um por slide**, com o número do slide no nome do arquivo:
+`slide07-...`, `slide08-...`, `slide14-...`, `slide18-...`, `slide19-...`. O
+[`fallback/README.md`](fallback/README.md) diz o que cada print mostra.
+
+**Abram a pasta no celular ANTES de começar.** Com a rede caída não dá para baixar nada, e
+um print que precisa de internet para abrir não é print de reserva.
+
+**E diga em voz alta que é print.** A frase está nas colinhas: _"a rede caiu, mas o print é
+do ensaio, com os mesmos passos."_ Fingir que é ao vivo é o jeito de transformar um problema
+de rede em um problema de credibilidade — e o professor está na sala.
+
+**O slide 18 é o único que o fallback não salva.** Ele existe para cada pessoa achar o
+**próprio** nome, e o print tem os nomes do ensaio. Mostra, explica o que aconteceria, e
+segue — não tenta disfarçar.
+
+---
+
 ## O que tem que estar pronto ANTES da aula
 
 - [x] Repositório da demo criado, **separado** do repo da equipe (ver abaixo)
@@ -86,9 +132,7 @@ interrompe aos 30.
       dá para baixar nada
 - [ ] Material publicado em `docs/aprofundamento/` **3 dias antes** — é regra da disciplina
 
-> ⚠️ **Nenhum dos quatro PRs plantados pode ser mergeado.** O `ajusta-validacao` leva um
-> bug para a `main` de propósito; o `exemplo-quebrado` é vermelho. Depois da aula, fecha
-> os quatro sem merge.
+> ⚠️ **Nenhum dos quatro PRs plantados pode ser mergeado** — ver a seção acima.
 
 ### O auto-merge — ligado em 06/10/2026, e a pegadinha que ele revelou
 

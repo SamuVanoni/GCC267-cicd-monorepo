@@ -1,5 +1,9 @@
 # Samuel — abertura (00–05) e fecho (28–30)
 
+_Leia antes: o [índice](README.md) explica **os quatro PRs plantados** — qual serve a
+qual slide, quem abre, e que **nenhum pode ser mergeado** — e **o que fazer se a internet
+cair**. Os dois valem para todo mundo, não só para o seu bloco._
+
 > Você abre e você fecha. No meio, você é o **suporte de sala** — o papel que faz a
 > interação não morrer.
 

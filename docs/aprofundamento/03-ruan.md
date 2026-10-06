@@ -1,5 +1,9 @@
 # Ruan — monorepo, path filter e cache (12–20)
 
+_Leia antes: o [índice](README.md) explica **os quatro PRs plantados** — qual serve a
+qual slide, quem abre, e que **nenhum pode ser mergeado** — e **o que fazer se a internet
+cair**. Os dois valem para todo mundo, não só para o seu bloco._
+
 > Seu bloco é o **conteúdo técnico do T05**. É aqui que o tema registrado se cumpre: não é
 > "CI/CD", é "CI/CD **em monorepo**", e o que diferencia os dois é o path filter.
 
