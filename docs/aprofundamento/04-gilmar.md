@@ -99,6 +99,9 @@ Os três cartões, rápido:
 > que criei o repo, consigo passar por cima. **Auto-merge:** ficou verde, entra sozinho.
 > E **deploy no merge:** entrou na main, vai pro ar."
 
+**Nota para quem fala:** o "deploy no merge" é verdade no desenho, mas na prática quem
+dispara é um clique, no próximo slide — o motivo está lá. **Não prometa "sozinho" aqui.**
+
 A ligação com a disciplina — vale dizer porque mostra que vocês leram a ementa:
 
 > "No nosso repositório da matéria isso **não** está assim: lá o professor exige revisão
@@ -118,12 +121,24 @@ Pegadinha técnica, em uma frase:
 
 O prêmio da interação — o equivalente ao feature flag que a outra equipe fez.
 
-Fala a frase, **depois** troca pro navegador com a página do mural aberta. Dá F5 na tela
-grande enquanto a sala dá F5 no celular.
+**⚠️ ANTES DE QUALQUER F5: ALGUÉM TEM QUE RODAR O DEPLOY. ELE NÃO RODA SOZINHO.**
+O merge automático é feito pelo robô do Actions, e **push do robô não dispara workflow**
+(regra do GitHub, existe para evitar loop infinito). Os PRs entram na `main` e a página
+fica velha. Isso foi medido no ensaio: o arquivo entrou e a página não mudou.
+
+**E isso vira parte do show, não um problema.** Com a aba já aberta em
+_Actions → deploy → Run workflow_, você clica ao vivo:
+
+> "Falta uma peça. Alguém tem que mandar isso pro ar. Olha só." (clica em **Run workflow**)
+> "Quarenta segundos."
+
+Enquanto roda, troca pro navegador com a página do mural aberta. Dá F5 na tela grande
+enquanto a sala dá F5 no celular.
 
 > "Abram o link de novo no celular. Dá um F5." (espera 5 segundos, deixa a sala achar o
 > próprio nome) "Esse nome aí apareceu porque o check de vocês ficou verde, o merge
-> aconteceu sozinho e o deploy rodou. Nenhum de nós quatro subiu nada. Nem sabíamos que
+> aconteceu sozinho, e o deploy que eu disparei agora pegou todos de uma vez. Nenhum de
+> nós quatro subiu arquivo nenhum. Nem sabíamos que
 > vocês existiam quando a gente escreveu esse pipeline."
 
 E a frase que amarra CI e CD, que é o tema:

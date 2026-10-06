@@ -78,7 +78,8 @@ interrompe aos 30.
 - [x] **PR [#6 `exemplo-quebrado`]** — o vermelho de reserva
 - [x] QR code gerado e colado nos slides 2 e 22 (os dois apontam para **este** repo)
 - [x] Os números reais medidos, trocados nos slides 8, 13, 15 e 16 — ver [`medicao.md`](medicao.md)
-- [ ] **Ligar o auto-merge** — ver abaixo, é o furo que sobrou
+- [x] **Auto-merge ligado** — `.github/workflows/auto-merge.yml`, testado no PR #7
+- [ ] **No slide 18, clicar em `Run workflow` no deploy** — ele **não** roda sozinho; ver abaixo
 - [ ] Prints de fallback em `docs/aprofundamento/fallback/` (a rede da faculdade vai cair)
 - [ ] Material publicado em `docs/aprofundamento/` **3 dias antes** — é regra da disciplina
 
@@ -86,22 +87,36 @@ interrompe aos 30.
 > bug para a `main` de propósito; o `exemplo-quebrado` é vermelho. Depois da aula, fecha
 > os quatro sem merge.
 
-### O furo do auto-merge
+### O auto-merge — ligado em 06/10/2026, e a pegadinha que ele revelou
 
 A regra do `README.md` da raiz promete à turma: _"se o check ficar verde, o PR entra
-sozinho e seu nome aparece na página"_. **Isso não acontece hoje.** O repositório
-_permite_ auto-merge (Settings → Allow auto-merge), mas permitir não é ligar: alguém
-precisa ligar o auto-merge **em cada PR**, na mão ou por workflow. Como está, os 30 PRs
-da turma ficam verdes e parados, ninguém entra na `main`, o `deploy.yml` não roda e o
-slide 18 ("vocês estão no ar") não tem o que mostrar.
+sozinho e seu nome aparece na página"_. Hoje **metade** disso é verdade.
 
-Duas saídas, as duas servem:
+**O que já funciona.** O workflow `.github/workflows/auto-merge.yml` liga o auto-merge em
+todo PR que mexe **só** em `participantes/*.json` (de 1 a 3 arquivos). Qualquer coisa fora
+disso ele recusa e deixa para revisão humana — é repositório público, e auto-merge sem
+revisão em PR que toca código ou workflow é porta aberta. Medido no PR #7: o PR entrou
+**sozinho**, sem ninguém clicar, segundos depois de o `fim` ficar verde.
 
-1. **No dia:** depois do slide 8, enquanto a Julia fala, alguém abre a lista de PRs e
-   clica em "Merge" nos verdes. Com 30 PRs é chato mas dá: são dois cliques cada.
-2. **Antes:** um workflow que liga o auto-merge sozinho **só** quando o PR mexe
-   exclusivamente em `participantes/`. Essa restrição não é zelo — é repositório público,
-   e auto-merge sem revisão em PR que toca código ou workflow é entrada aberta.
+**⚠️ O que NÃO funciona: a página não atualiza.** O motivo é uma regra do GitHub que vale
+saber: **push feito pelo `GITHUB_TOKEN` não dispara workflow.** Ela existe para evitar
+workflow que se chama em loop. Como foi o Actions que ligou o auto-merge, o merge na `main`
+conta como push do robô — e o `deploy.yml`, que roda em `push: main`, **não roda**. Medido:
+o arquivo de teste entrou na `main` (commit `fa57a43`) e a página continuou sem ele.
+
+Então o furo não fechou, ele **andou um passo**: antes os PRs não entravam; agora entram e
+a página não sai.
+
+**A saída para o dia — e ela é melhor para a apresentação.** O `deploy.yml` tem
+`workflow_dispatch`. No slide 18, com a aba já aberta em _Actions → deploy → Run workflow_,
+alguém clica **ao vivo**. Um clique, ~40 segundos, e os 30 nomes aparecem de uma vez, com
+causa e efeito na tela. É melhor do que a página ter atualizado sozinha minutos antes, sem
+ninguém ver.
+
+**A saída definitiva, se um dia quiser 100% automático:** ligar o auto-merge com um PAT
+(token pessoal) guardado em secret, em vez do `GITHUB_TOKEN`. Aí o merge conta como push de
+pessoa e o deploy roda sozinho. Custa criar o token e guardar o secret, e **não é necessário
+para a aula**.
 
 **Nada é digitado ao vivo.** Todo PR da demo está aberto antes da aula, em abas separadas,
 com a tela já no estado certo. Criar commit ao vivo com projetor e wifi de faculdade é

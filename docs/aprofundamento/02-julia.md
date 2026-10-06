@@ -108,6 +108,12 @@ três (é o `fail-fast`, que vem ligado). Se alguém perguntar, a resposta cabe 
 _"a primeira versão falhou, então ele parou de gastar máquina com as outras"_. Não entre
 em matriz — é assunto do Ruan.
 
+**⚠️ E vai aparecer uma linha a mais: `liberar o merge automatico`.** Essa é nossa, e é o
+que faz o PR entrar sozinho — ela liga o auto-merge em todo PR que mexe só em
+`participantes/`. No `#6` ela também fica **verde**, e isso não é contradição: ela só
+_liga_ o auto-merge; quem segura o merge é o check `fim`, que está vermelho. Em uma frase:
+_"essa é a parte que mergeia sozinho quando o check passar"_.
+
 **Se a internet caiu:** abre o print em `docs/aprofundamento/fallback/` e diga a verdade —
 _"a rede caiu, mas o print é do ensaio de ontem com os mesmos passos"_. Honestidade é
 melhor que improviso.
