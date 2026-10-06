@@ -165,9 +165,32 @@ ninguém ver.
 pessoa e o deploy roda sozinho. Custa criar o token e guardar o secret, e **não é necessário
 para a aula**.
 
-**Nada é digitado ao vivo.** Todo PR da demo está aberto antes da aula, em abas separadas,
-com a tela já no estado certo. Criar commit ao vivo com projetor e wifi de faculdade é
-onde a demo morre.
+## No dia, antes de começar
+
+**Nada é digitado ao vivo.** Criar commit ao vivo com projetor e wifi de faculdade é onde a
+demo morre. Tudo já está pronto — o trabalho do dia é só deixar as telas no estado certo.
+
+- [ ] **Abrir a pasta [`fallback/`](fallback/) no celular.** Com a rede caída não dá para
+      baixar nada.
+- [ ] Abrir as abas, nesta ordem, e **deixar todas abertas**:
+      a lista de PRs · os PRs [#3](https://github.com/SamuVanoni/GCC267-cicd-monorepo/pull/3), [#4](https://github.com/SamuVanoni/GCC267-cicd-monorepo/pull/4), [#5](https://github.com/SamuVanoni/GCC267-cicd-monorepo/pull/5) e [#6](https://github.com/SamuVanoni/GCC267-cicd-monorepo/pull/6) ·
+      **Actions → deploy → Run workflow** · a [página do mural](https://samuvanoni.github.io/GCC267-cicd-monorepo/)
+- [ ] Conferir quem **opera o telão** em cada bloco — e lembrar: **quem fala não mexe no
+      telão**.
+- [ ] Combinar o sinal do cronômetro (3 minutos, 1 minuto, corta).
+
+> ⚠️ **Não abra a aba Conversation do PR #5.** A descrição dele não entrega o truque de
+> propósito — a sala lê aquilo durante o voto. Ler em voz alta antes da hora mata o
+> slide 19.
+
+**Durante, os dois que mais escapam:**
+
+- **Slide 18: clicar em `Run workflow` ANTES de pedir o F5.** O deploy não sai sozinho — o
+  porquê está na seção do auto-merge, acima.
+- **Slide 7: se ninguém da turma levou vermelho, abre o PR #6.** Nunca fique sem um vermelho
+  no telão.
+
+**Depois da aula:** fechar os quatro PRs plantados **sem merge** — ver a seção deles.
 
 ---
 
