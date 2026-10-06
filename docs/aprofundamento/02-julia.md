@@ -98,8 +98,15 @@ Isso é uma **deixa**, não um slide. O Ruan troca para o navegador, na aba de P
 > porteiro barrou. Quem levou vermelho: não é vergonha, é a parte boa da aula — vocês vão
 > consertar em um minuto."
 
-**Se ninguém levou vermelho:** abre o PR `exemplo-quebrado`, que está plantado no repo.
-**Nunca fique sem um vermelho na tela** — é nele que está a aula.
+**Se ninguém levou vermelho:** abre o PR **#6 `exemplo-quebrado`**, que está plantado no
+repo. **Nunca fique sem um vermelho na tela** — é nele que está a aula. O erro dele é o mais
+comum de verdade: `"tema": "T5"` em vez de `"T05"`.
+
+**⚠️ Nesse PR três checks aparecem como _cancelled_, e não é bug.** A matriz do
+`ci-ingenuo` roda as quatro versões de Node; quando a 18 falha, o GitHub cancela as outras
+três (é o `fail-fast`, que vem ligado). Se alguém perguntar, a resposta cabe numa frase:
+_"a primeira versão falhou, então ele parou de gastar máquina com as outras"_. Não entre
+em matriz — é assunto do Ruan.
 
 **Se a internet caiu:** abre o print em `docs/aprofundamento/fallback/` e diga a verdade —
 _"a rede caiu, mas o print é do ensaio de ontem com os mesmos passos"_. Honestidade é

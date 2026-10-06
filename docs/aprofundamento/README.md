@@ -68,18 +68,40 @@ interrompe aos 30.
 
 ## O que tem que estar pronto ANTES da aula
 
-- [ ] Repositório da demo criado, **separado** do repo da equipe (ver abaixo)
-- [ ] Os dois workflows: o ingênuo e o consertado
-- [ ] Branch protection (só status check, **sem** review obrigatório) + auto-merge
-- [ ] Deploy do mural no GitHub Pages funcionando
-- [ ] **PR `toca-so-o-mural` já aberto** (demo do path filter, caso 1)
-- [ ] **PR `toca-o-shared` já aberto** (demo do path filter, caso 2)
-- [ ] **PR `ajusta-validacao` já aberto** — o verde e errado
-- [ ] **PR `exemplo-quebrado` já aberto** — reserva, caso ninguém da sala leve vermelho
-- [ ] QR code gerado e colado nos slides 2 e 22
+- [x] Repositório da demo criado, **separado** do repo da equipe (ver abaixo)
+- [x] Os dois workflows: o ingênuo e o consertado
+- [x] Branch protection: `fim` é o status check obrigatório, **sem** review
+- [x] Deploy do mural no GitHub Pages funcionando — <https://samuvanoni.github.io/GCC267-cicd-monorepo/>
+- [x] **PR [#3 `toca-so-o-mural`]** — path filter, caso 1: 1 job roda, 2 ficam _skipped_
+- [x] **PR [#4 `toca-o-shared`]** — path filter, caso 2: os 3 acordam
+- [x] **PR [#5 `ajusta-validacao`]** — o verde e errado, 3 checks verdes
+- [x] **PR [#6 `exemplo-quebrado`]** — o vermelho de reserva
+- [x] QR code gerado e colado nos slides 2 e 22 (os dois apontam para **este** repo)
+- [x] Os números reais medidos, trocados nos slides 8, 13, 15 e 16 — ver [`medicao.md`](medicao.md)
+- [ ] **Ligar o auto-merge** — ver abaixo, é o furo que sobrou
 - [ ] Prints de fallback em `docs/aprofundamento/fallback/` (a rede da faculdade vai cair)
-- [ ] Os números reais medidos no ensaio, trocados nos slides 13 e 16
 - [ ] Material publicado em `docs/aprofundamento/` **3 dias antes** — é regra da disciplina
+
+> ⚠️ **Nenhum dos quatro PRs plantados pode ser mergeado.** O `ajusta-validacao` leva um
+> bug para a `main` de propósito; o `exemplo-quebrado` é vermelho. Depois da aula, fecha
+> os quatro sem merge.
+
+### O furo do auto-merge
+
+A regra do `README.md` da raiz promete à turma: _"se o check ficar verde, o PR entra
+sozinho e seu nome aparece na página"_. **Isso não acontece hoje.** O repositório
+_permite_ auto-merge (Settings → Allow auto-merge), mas permitir não é ligar: alguém
+precisa ligar o auto-merge **em cada PR**, na mão ou por workflow. Como está, os 30 PRs
+da turma ficam verdes e parados, ninguém entra na `main`, o `deploy.yml` não roda e o
+slide 18 ("vocês estão no ar") não tem o que mostrar.
+
+Duas saídas, as duas servem:
+
+1. **No dia:** depois do slide 8, enquanto a Julia fala, alguém abre a lista de PRs e
+   clica em "Merge" nos verdes. Com 30 PRs é chato mas dá: são dois cliques cada.
+2. **Antes:** um workflow que liga o auto-merge sozinho **só** quando o PR mexe
+   exclusivamente em `participantes/`. Essa restrição não é zelo — é repositório público,
+   e auto-merge sem revisão em PR que toca código ou workflow é entrada aberta.
 
 **Nada é digitado ao vivo.** Todo PR da demo está aberto antes da aula, em abas separadas,
 com a tela já no estado certo. Criar commit ao vivo com projetor e wifi de faculdade é
