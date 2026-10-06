@@ -13,7 +13,7 @@ function validar(dados, arquivo) {
 
   // O nome e obrigatorio: e ele que aparece na pagina publica.
   if (!dados.nome || !String(dados.nome).trim()) {
-    throw new Error(`${arquivo}: o campo "nome" e obrigatorio`);
+    dados.nome = "sem nome";
   }
 
   if (!dados.equipe || !String(dados.equipe).trim()) {
