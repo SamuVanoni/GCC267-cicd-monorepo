@@ -1,0 +1,133 @@
+name: auto-merge
+
+# ============================================================================
+# O QUE ESTE WORKFLOW FAZ, EM UMA FRASE: quando chega um PR que mexe SO em
+# participantes/*.json, ele liga o "auto-merge" daquele PR. O GitHub passa a
+# segurar o merge ate o check `fim` ficar verde -- e, no segundo em que ficar,
+# mergeia sozinho. Dai o deploy.yml roda e a pagina sai no ar.
+#
+# E ISTO que torna verdadeira a frase do README: "se o check ficar verde, o PR
+# entra sozinho e seu nome aparece na pagina". Sem este arquivo, 30 PRs verdes
+# ficam parados esperando alguem clicar em Merge 30 vezes.
+#
+# PERMITIR AUTO-MERGE NAO E LIGAR AUTO-MERGE. O Settings > General > Allow
+# auto-merge apenas autoriza; ligar e uma acao POR PR, que alguem (ou algo)
+# precisa executar. Era exatamente este o furo.
+#
+# ----------------------------------------------------------------------------
+# POR QUE `pull_request_target` E NAO `pull_request`
+#
+# Quem usa o botao "Create new file" num repo que nao e dele cria um FORK sem
+# perceber -- e todos os PRs da sala vao vir de fork. Em PR de fork, o
+# GITHUB_TOKEN do `pull_request` e SO LEITURA: nao da para ligar auto-merge.
+# O `pull_request_target` roda no contexto do repo BASE, com token de escrita.
+#
+# E a parte que importa de seguranca: `pull_request_target` com token de
+# escrita e perigoso quando o workflow faz CHECKOUT e EXECUTA o codigo do PR
+# -- ai quem manda no token e o PR. Este aqui nao faz checkout nenhum e nao
+# roda uma linha de codigo de ninguem: so pergunta ao GitHub "quais arquivos
+# este PR mexe?" e, se a resposta passar no portao, liga o auto-merge.
+# NAO ACRESCENTE `actions/checkout` AQUI DEPOIS.
+#
+# Outra consequencia boa: `pull_request_target` roda SEMPRE a versao que esta
+# na main, nunca a do PR. Ninguem afrouxa o portao abaixo mexendo no proprio
+# PR -- diferente do `pull_request`, que roda o arquivo do branch de origem.
+# ----------------------------------------------------------------------------
+# O QUE ESTE WORKFLOW **NAO** RESOLVE
+#
+# O portao limita ONDE a pessoa escreve, nao O QUE ela escreve. Um nome
+# ofensivo dentro de um participantes/x.json valido passa no `fim`, entra na
+# main e vai para a pagina publica em menos de um minuto, sem ninguem olhar.
+# Isso nao tem conserto por workflow: alguem fica de olho na pagina durante a
+# aula.
+# ============================================================================
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+    paths:
+      - "participantes/**"
+
+# Nada por padrao; a permissao de escrita e declarada no job que precisa dela.
+permissions: {}
+
+# Dois eventos do mesmo PR nao podem brigar entre "ligar" e "desligar".
+concurrency:
+  group: auto-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  liberar:
+    name: liberar o merge automatico
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # mergear
+      pull-requests: write # ligar/desligar o auto-merge
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR: ${{ github.event.pull_request.number }}
+      REPO: ${{ github.repository }}
+    steps:
+      # ----------------------------------------------------------------------
+      # O PORTAO. Tudo o que nao for "um arquivo .json dentro de participantes/"
+      # cai fora e vai para revisao humana. E de proposito que ele e uma lista
+      # de PERMITIDOS por regex, e nao uma lista de proibidos: lista de
+      # proibidos e sempre incompleta, e o que esta em jogo e mergear na main
+      # de um repo publico sem ninguem olhar.
+      # ----------------------------------------------------------------------
+      - name: conferir se o PR mexe SO em participantes/*.json
+        id: portao
+        run: |
+          ARQUIVOS=$(gh api --paginate "repos/$REPO/pulls/$PR/files" --jq '.[].filename')
+
+          echo "arquivos deste PR:"
+          printf '%s\n' "$ARQUIVOS" | sed 's/^/  /'
+
+          QUANTOS=$(printf '%s\n' "$ARQUIVOS" | grep -c . || true)
+          if [ "$QUANTOS" -eq 0 ] || [ "$QUANTOS" -gt 3 ]; then
+            echo "liberado=false" >> "$GITHUB_OUTPUT"
+            echo ">> $QUANTOS arquivo(s): fora da faixa de 1 a 3. Fica para revisao humana."
+            exit 0
+          fi
+
+          # O ^...$ e o que prende dentro de participantes/: barra no meio do
+          # nome (participantes/../.github/...) nao casa, subpasta nao casa.
+          FORA=$(printf '%s\n' "$ARQUIVOS" | grep -vE '^participantes/[A-Za-z0-9._-]+\.json$' || true)
+          if [ -n "$FORA" ]; then
+            echo "liberado=false" >> "$GITHUB_OUTPUT"
+            echo ">> este PR mexe em arquivo que nao e participantes/*.json:"
+            printf '%s\n' "$FORA" | sed 's/^/     /'
+            echo ">> fica para revisao humana."
+            exit 0
+          fi
+
+          echo "liberado=true" >> "$GITHUB_OUTPUT"
+          echo ">> passou no portao."
+
+      - name: ligar o auto-merge
+        if: steps.portao.outputs.liberado == 'true'
+        run: |
+          # --auto NAO mergeia agora: registra "mergeie quando os checks
+          # obrigatorios passarem". O unico obrigatorio da main e o `fim`.
+          #
+          # Se o PR estiver com conflito (dois alunos escolheram o mesmo nome
+          # de arquivo), o gh devolve erro. Aqui isso vira WARNING e nao derruba
+          # o job, de proposito: durante a apresentacao a aba de checks esta
+          # PROJETADA, e um X vermelho nosso no meio dos checks da aula custa
+          # mais caro que um merge feito na mao. O aviso fica no log do Actions.
+          if ! gh pr merge --auto --squash "$PR" --repo "$REPO"; then
+            echo "::warning::nao consegui ligar o auto-merge no PR #$PR (conflito, ou PR ja fechado). Mergeie na mao."
+          fi
+
+      # ----------------------------------------------------------------------
+      # E ESTE PASSO QUE FECHA O ATALHO OBVIO: abrir o PR limpo, esperar o
+      # auto-merge ligar e DEPOIS empurrar um segundo commit com o que quiser.
+      # O auto-merge SOBREVIVE a commits novos -- entao, se o portao passou a
+      # reprovar, tem que desligar.
+      # ----------------------------------------------------------------------
+      - name: desligar o auto-merge se o PR deixou de passar no portao
+        if: steps.portao.outputs.liberado == 'false'
+        run: |
+          if ! gh pr merge --disable-auto "$PR" --repo "$REPO"; then
+            echo "o auto-merge ja estava desligado neste PR."
+          fi
