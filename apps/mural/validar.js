@@ -11,18 +11,7 @@ function validar(dados, arquivo) {
     throw new Error(`${arquivo}: o conteudo precisa ser um objeto JSON`);
   }
 
-  // ------------------------------------------------------------------
-  // A LINHA DO PR PLANTADO (slide 19 da apresentacao).
-  //
-  // O PR "ajusta-validacao" troca o throw abaixo por:
-  //
-  //     dados.nome = 'sem nome';
-  //
-  // Todos os testes continuam VERDES, porque nenhum teste cobre o caso do
-  // nome vazio. O resultado e um "sem nome" na pagina publica.
-  //
-  // O conserto nao e codigo, e TESTE -- ver docs/aprofundamento/04-gilmar.md
-  // ------------------------------------------------------------------
+  // O nome e obrigatorio: e ele que aparece na pagina publica.
   if (!dados.nome || !String(dados.nome).trim()) {
     throw new Error(`${arquivo}: o campo "nome" e obrigatorio`);
   }

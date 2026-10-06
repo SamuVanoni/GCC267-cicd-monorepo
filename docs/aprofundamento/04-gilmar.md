@@ -149,20 +149,34 @@ caçar"_ como formato que funciona — e isto é exatamente isso.
 
 ### O PR plantado
 
-Já aberto no repo antes da aula, com nome discreto tipo `ajusta-validacao`. Ele muda o
-`validar.js` assim:
+Já está aberto no repo: **PR `ajusta-validacao`**, com título discreto. Ele muda duas
+linhas de `apps/mural/validar.js`:
 
 ```js
 // antes
-if (!dados.nome) throw new Error("nome obrigatorio");
+if (!dados.nome || !String(dados.nome).trim()) {
+  throw new Error(`${arquivo}: o campo "nome" e obrigatorio`);
+}
 
 // depois
-if (!dados.nome) return;
+if (!dados.nome || !String(dados.nome).trim()) {
+  dados.nome = "sem nome";
+}
 ```
 
-A validação para de reclamar e passa a **aceitar** qualquer json sem nome. Todos os testes
-continuam passando, porque nenhum teste cobria o caso do nome vazio. **Check verde, lint
-verde, código errado.**
+A validação para de reclamar e passa a **aceitar** qualquer json sem nome — que vai pra
+página pública como "sem nome". Todos os testes continuam passando, porque nenhum teste
+cobria o caso do nome vazio. **Check verde, lint verde, código errado.**
+
+**Por que `dados.nome = "sem nome"` e não `return;`:** `return` sem valor devolve
+`undefined`, e aí o `build.js` quebraria ao ler `p.nome` — o check ficaria **vermelho** e
+não haveria pegadinha nenhuma. O defeito tem que ser silencioso pra servir.
+
+**O `validar.js` não tem mais comentário explicando o plantio** (saiu de propósito em
+06/10/2026): com ele, as três linhas de contexto que o GitHub mostra em volta da mudança
+entregavam a brincadeira na própria aba **Files changed**. A explicação é esta aqui. O
+comentário que **continua** no `apps/mural/test.js` é outro — ele explica por que o teste
+do nome vazio não existe, e não aparece no diff deste PR.
 
 ### Como conduzir
 

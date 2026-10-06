@@ -165,9 +165,16 @@ Deixa, não slide. O Gilmar troca para o navegador.
 
 **Os dois PRs já têm que estar abertos antes da aula.** Você não digita nada ao vivo.
 
-1. Abre o PR **`toca-so-o-mural`**. Aba Checks: **um** job verde, **dois** com ícone de
-   skipped.
+1. Abre o PR **`toca-so-o-mural`**. Aba Checks: dos três jobs de pacote, **um** verde e
+   **dois** com ícone de skipped.
+
    > "Um job rodou. Os outros dois nem acordaram."
+
+   **⚠️ Vão aparecer mais três linhas na lista, e não é erro:** `detectar`,
+   `conferir formatacao` e `fim` rodam **sempre**. Se alguém perguntar, a resposta é curta e
+   boa: _"o lint olha o repositório inteiro, então não existe pasta que mudou pra ele"_.
+   Os que o filtro controla são os três de teste — é neles que você aponta.
+
 2. Abre o PR **`toca-o-shared`**. **Três** jobs rodando.
    > "Mexi na biblioteca que os dois usam. Agora o robô não sabe quem eu quebrei, então ele
    > testa todo mundo. E isso está certo."
