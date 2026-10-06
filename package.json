@@ -15,6 +15,12 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^3.3.3"
+    "@eslint/js": "^9.11.1",
+    "@types/node": "^22.7.4",
+    "eslint": "^9.11.1",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.8.0",
+    "vitest": "^2.1.2"
   }
 }
