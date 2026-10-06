@@ -42,6 +42,10 @@ for (const arquivo of arquivos) {
   }
 }
 
+// A pagina sai em ordem alfabetica de NOME, nao de nome de arquivo: quem manda
+// "zezinho.json" nao deve aparecer no fim so por causa da letra do arquivo.
+participantes.sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+
 // O log e desenhado para o slide 8 ("como ler um log de CI"): o que passou em
 // cinza, o que falhou no fim, e a linha Error: por ultimo.
 console.log(`lendo participantes/ (${arquivos.length} arquivos)`);
