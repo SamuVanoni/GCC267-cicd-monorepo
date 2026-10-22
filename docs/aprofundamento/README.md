@@ -130,7 +130,10 @@ segue — não tenta disfarçar.
 - [x] QR code gerado e colado nos slides 2 e 22 (os dois apontam para **este** repo)
 - [x] Os números reais medidos, trocados nos slides 8, 13, 15 e 16 — ver [`medicao.md`](medicao.md)
 - [x] **Auto-merge ligado** — `.github/workflows/auto-merge.yml`, testado no PR #7
-- [ ] **No slide 18, clicar em `Run workflow` no deploy** — ele **não** roda sozinho; ver abaixo
+- [ ] **Secret `AUTO_MERGE_TOKEN` configurado** (token do Samuel) — sem ele o CI da turma
+      fica esperando aprovação e o deploy não sai sozinho; ver abaixo
+- [ ] **Testado com um PR de fork de quem nunca contribuiu**: CI aprovado sozinho, PR
+      entrou sozinho e o `deploy` rodou com evento `push`, sem clique
 - [x] Prints de fallback em [`fallback/`](fallback/) — 9 prints + o log em texto, com
       [`fallback/README.md`](fallback/README.md) dizendo qual serve a qual slide
 - [ ] **Abrir a pasta `fallback/` no celular antes de começar** — com a rede caída não
@@ -159,16 +162,29 @@ o arquivo de teste entrou na `main` (commit `fa57a43`) e a página continuou sem
 Então o furo não fechou, ele **andou um passo**: antes os PRs não entravam; agora entram e
 a página não sai.
 
-**A saída para o dia — e ela é melhor para a apresentação.** O `deploy.yml` tem
-`workflow_dispatch`. No slide 18, com a aba já aberta em _Actions → deploy → Run workflow_,
-alguém clica **ao vivo**. Um clique, ~40 segundos, e os 30 nomes aparecem de uma vez, com
-causa e efeito na tela. É melhor do que a página ter atualizado sozinha minutos antes, sem
-ninguém ver.
+**⚠️ E o segundo furo, achado em 22/10/2026: o CI da turma nem roda.** Todo PR da sala vem
+de fork de quem nunca contribuiu aqui, e o GitHub segura o CI desses PRs em
+`action_required` até alguém clicar em **Approve and run**. Em repositório público não existe
+opção que desligue isso — a mais permissiva, _"first-time contributors who are new to
+GitHub"_, segurou mesmo assim o PR #11, de uma conta com quase dois anos. Sem CI, o `fim`
+nunca fica verde e o auto-merge nunca dispara.
 
-**A saída definitiva, se um dia quiser 100% automático:** ligar o auto-merge com um PAT
-(token pessoal) guardado em secret, em vez do `GITHUB_TOKEN`. Aí o merge conta como push de
-pessoa e o deploy roda sozinho. Custa criar o token e guardar o secret, e **não é necessário
-para a aula**.
+**A saída para os dois: um token pessoal do Samuel**, guardado no secret `AUTO_MERGE_TOKEN`.
+O `auto-merge.yml` usa esse token para:
+
+1. **aprovar o CI** do PR, depois de o PR passar no portão — o CI aprovado só roda código
+   que já está na `main`, com o json do aluno como dado;
+2. **ligar o auto-merge** — o merge passa a contar como push de pessoa, e o `deploy.yml`
+   roda sozinho. Isso é o CD de verdade: entrou na `main`, vai pro ar.
+
+O token é _fine-grained_, só deste repositório, com **Actions**, **Contents** e **Pull
+requests** de escrita. Ele fica exposto ao workflow, e é por isso que o `auto-merge.yml`
+**nunca** pode fazer `actions/checkout` do código do PR — está escrito no cabeçalho dele.
+
+**Plano B, se o token falhar no dia:** o CI de cada PR é aprovado na mão (**Approve
+workflows to run**, no próprio PR), e o deploy sai pelo `workflow_dispatch` — _Actions →
+deploy → Run workflow_ no slide 18. Um clique, ~40 segundos, e os nomes aparecem de uma
+vez.
 
 ## No dia, antes de começar
 
@@ -190,8 +206,8 @@ demo morre. Tudo já está pronto — o trabalho do dia é só deixar as telas n
 
 **Durante, os dois que mais escapam:**
 
-- **Slide 18: clicar em `Run workflow` ANTES de pedir o F5.** O deploy não sai sozinho — o
-  porquê está na seção do auto-merge, acima.
+- **Slide 18: antes de pedir o F5, olhar se o último `deploy` terminou.** Se a página não
+  tiver os nomes, `Run workflow` é o plano B — ver a seção do auto-merge, acima.
 - **Slide 7: se ninguém da turma levou vermelho, abre o PR #6.** Nunca fique sem um vermelho
   no telão.
 

@@ -33,7 +33,8 @@ tema vai de `T01` a `T13`. O conteúdo fica assim:
 Abriu o app do GitHub em vez do navegador? **⋯** → **Open in browser**. Chegou sem o link?
 Na página do repo, **Add file** → **Create new file** e siga do passo 2.
 
-Se o check ficar verde, o PR entra sozinho e seu nome aparece na página no próximo deploy.
+Se o check ficar verde, o PR entra sozinho e seu nome aparece na página em cerca de um
+minuto.
 Se ficar vermelho, clique no X → **Details** → role até o fim do log: a linha `Error:` diz o
 que arrumar.
 
@@ -96,15 +97,17 @@ Node 18, 20, 22 ou 24. Sem dependências externas — só a biblioteca padrão.
 - **Settings → General → Allow auto-merge**
 - **Settings → Rules/Branches → main:** exigir o status check `fim`, **sem** revisão
   obrigatória
-- **Settings → Actions → General → Approval for running fork pull request workflows from
-  contributors:** _Require approval for first-time contributors who are new to GitHub_
+- **Settings → Secrets and variables → Actions:** secret `AUTO_MERGE_TOKEN` com um token
+  _fine-grained_ só deste repo, com **Actions**, **Contents** e **Pull requests** de escrita
 
 > ⚠️ Exigir um check que o path filter faz **pular** trava o PR para sempre, esperando um
 > job que nunca vai rodar. Exija só o `fim`, o job agregador que sempre roda.
 
-> ⚠️ Todo PR da turma vem de fork. Com a aprovação no padrão do GitHub, os checks de quem
-> nunca contribuiu aqui ficam parados em "Workflow awaiting approval" até alguém clicar em
-> **Approve and run** — o `fim` não fica verde e o auto-merge não acontece.
+> ⚠️ Todo PR da turma vem de fork de quem nunca contribuiu aqui, e o GitHub segura o CI
+> desses PRs até alguém clicar em **Approve and run** — em repo público não há opção que
+> desligue isso. O `auto-merge.yml` usa o `AUTO_MERGE_TOKEN` para aprovar o CI dos PRs que
+> passam no portão e para mergear como pessoa, o que faz o `deploy.yml` rodar sozinho.
+> Detalhes em [`docs/aprofundamento/README.md`](docs/aprofundamento/README.md).
 
 ---
 

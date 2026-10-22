@@ -78,15 +78,15 @@ da pessoa.
 
 Os travamentos que vão aparecer, em ordem de frequência:
 
-| Sintoma                      | O que é                                                                                                             |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| "abriu o app do GitHub"      | o app não cria arquivo. **⋯** → **Open in browser**                                                                 |
-| "o botão Fork não faz nada"  | navegador embutido do leitor de QR: abre no navegador de verdade. No Brave, desliga o **Shields** para o github.com |
-| "não abre o link"            | sem conta no GitHub — manda logar, 1 minuto                                                                         |
-| "commitei mas não apareceu"  | não clicou em **Create pull request**                                                                               |
-| "deu erro de JSON"           | vírgula sobrando na última linha, ou aspas curvas do teclado do iPhone                                              |
-| "ficou verde mas não entrou" | nome do arquivo com espaço, acento ou fora de `participantes/`: o auto-merge recusou. Renomeia no próprio PR        |
-| "Workflow awaiting approval" | conta criada há pouco: o GitHub segura os checks. **Approve and run** no PR — você é admin, é com você              |
+| Sintoma                      | O que é                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| "abriu o app do GitHub"      | o app não cria arquivo. **⋯** → **Open in browser**                                                                         |
+| "o botão Fork não faz nada"  | navegador embutido do leitor de QR: abre no navegador de verdade. No Brave, desliga o **Shields** para o github.com         |
+| "não abre o link"            | sem conta no GitHub — manda logar, 1 minuto                                                                                 |
+| "commitei mas não apareceu"  | não clicou em **Create pull request**                                                                                       |
+| "deu erro de JSON"           | vírgula sobrando na última linha, ou aspas curvas do teclado do iPhone                                                      |
+| "ficou verde mas não entrou" | nome do arquivo com espaço, acento ou fora de `participantes/`: o auto-merge recusou. Renomeia no próprio PR                |
+| "Workflow awaiting approval" | normal nos primeiros segundos: o `auto-merge.yml` aprova sozinho. Se passar de 1 minuto, **Approve workflows to run** no PR |
 
 **Anote mentalmente onde a sala mais travou.** Você vai usar isso no fecho, e é o detalhe
 que mostra que a interação não foi enfeite.
