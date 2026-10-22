@@ -6,6 +6,9 @@ name: auto-merge
 # segurar o merge ate o check `fim` ficar verde -- e, no segundo em que ficar,
 # mergeia sozinho. Dai o deploy.yml roda e a pagina sai no ar.
 #
+# Ele tambem APROVA o CI desses PRs, que o GitHub segura por virem de fork --
+# ver "por que um token pessoal", abaixo.
+#
 # E ISTO que torna verdadeira a frase do README: "se o check ficar verde, o PR
 # entra sozinho e seu nome aparece na pagina". Sem este arquivo, 30 PRs verdes
 # ficam parados esperando alguem clicar em Merge 30 vezes.
@@ -32,6 +35,27 @@ name: auto-merge
 # Outra consequencia boa: `pull_request_target` roda SEMPRE a versao que esta
 # na main, nunca a do PR. Ninguem afrouxa o portao abaixo mexendo no proprio
 # PR -- diferente do `pull_request`, que roda o arquivo do branch de origem.
+# ----------------------------------------------------------------------------
+# POR QUE UM TOKEN PESSOAL (secret AUTO_MERGE_TOKEN) E NAO SO O GITHUB_TOKEN
+#
+# Dois problemas que o GITHUB_TOKEN sozinho nao resolve:
+#
+#   1. O GitHub SEGURA o CI de PR de fork de quem nunca contribuiu no repo
+#      ("action_required") ate alguem aprovar -- e em repo publico nao ha
+#      opcao que desligue isso. Toda a turma cai nesse caso. Sem CI, o `fim`
+#      nunca fica verde e o auto-merge nunca dispara.
+#   2. Push feito pelo GITHUB_TOKEN nao dispara workflow (trava contra loop).
+#      Com o auto-merge ligado por ele, o merge conta como push do robo e o
+#      deploy.yml nao roda.
+#
+# O token e do Samuel, fine-grained, so deste repo, com Actions, Contents e
+# Pull requests de escrita. Com ele o workflow aprova o CI e o merge conta
+# como push de pessoa. Sem o secret, cai no GITHUB_TOKEN: o PR ainda pode
+# entrar, mas o CI fica esperando aprovacao e o deploy nao sai.
+#
+# `pull_request_target` entrega secrets ate para PR de fork. E por isso que o
+# aviso acima vale em dobro: com `actions/checkout` aqui, o token do Samuel
+# fica nas maos de quem abrir o PR.
 # ----------------------------------------------------------------------------
 # O QUE ESTE WORKFLOW **NAO** RESOLVE
 #
@@ -63,6 +87,7 @@ jobs:
     permissions:
       contents: write # mergear
       pull-requests: write # ligar/desligar o auto-merge
+      actions: write # aprovar o CI, se o AUTO_MERGE_TOKEN faltar
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PR: ${{ github.event.pull_request.number }}
@@ -106,6 +131,8 @@ jobs:
 
       - name: ligar o auto-merge
         if: steps.portao.outputs.liberado == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.AUTO_MERGE_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           # --auto NAO mergeia agora: registra "mergeie quando os checks
           # obrigatorios passarem". O unico obrigatorio da main e o `fim`.
@@ -118,6 +145,38 @@ jobs:
           if ! gh pr merge --auto --squash "$PR" --repo "$REPO"; then
             echo "::warning::nao consegui ligar o auto-merge no PR #$PR (conflito, ou PR ja fechado). Mergeie na mao."
           fi
+
+      # ----------------------------------------------------------------------
+      # O CI segurado do problema 1 do cabecalho. So chega aqui PR que passou
+      # no portao: o CI aprovado roda o codigo que ja esta na main, com o json
+      # do aluno como dado.
+      # ----------------------------------------------------------------------
+      - name: aprovar o CI do PR
+        if: steps.portao.outputs.liberado == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.AUTO_MERGE_TOKEN || secrets.GITHUB_TOKEN }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # O CI nasce junto com o PR, mas pode aparecer uns segundos depois
+          # deste job -- dai as tentativas. Sao 2 runs por commit (ci-ingenuo e
+          # ci-rapido). Quem ja contribuiu aqui nao tem nada para aprovar, e o
+          # passo so termina depois de ~30s.
+          APROVADAS=0
+          for tentativa in 1 2 3 4 5 6; do
+            for id in $(gh api "repos/$REPO/actions/runs?head_sha=$SHA&status=action_required" --jq '.workflow_runs[].id'); do
+              if ! gh api -X POST "repos/$REPO/actions/runs/$id/approve" > /dev/null; then
+                echo "::warning::nao consegui aprovar o CI do PR #$PR. Aprove na mao: PR -> Approve workflows to run."
+                exit 0
+              fi
+              echo "aprovada a run $id"
+              APROVADAS=$((APROVADAS + 1))
+            done
+            if [ "$APROVADAS" -ge 2 ]; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "$APROVADAS run(s) aprovada(s) -- o resto nao precisava de aprovacao."
 
       # ----------------------------------------------------------------------
       # E ESTE PASSO QUE FECHA O ATALHO OBVIO: abrir o PR limpo, esperar o
