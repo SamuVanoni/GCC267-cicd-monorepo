@@ -8,7 +8,7 @@ function normalizarNome(valor) {
 }
 
 function ehTemaValido(tema) {
-  return /^T(0[1-9]|1[0-3])$/.test(String(tema).toUpperCase());
+  return /^T(0[1-9]|1[0-3])$/.test(String(tema).trim().toUpperCase());
 }
 
 module.exports = { normalizarNome, ehTemaValido };
