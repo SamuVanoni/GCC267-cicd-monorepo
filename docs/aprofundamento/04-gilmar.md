@@ -107,9 +107,9 @@ Os três cartões, rápido:
 > `participantes/` ficou verde, entra sozinho; ninguém clica em Merge. E **deploy da
 > main:** um workflow gera a página a partir da main e publica."
 
-**Nota para quem fala:** o cartão diz "deploy da main", não "deploy no merge", de
-propósito: quem dispara o deploy é um clique, no próximo slide — o motivo está lá. **Não
-prometa "sozinho" aqui.**
+**Se perguntarem como o robô consegue mergear e ainda disparar o deploy:** _"ele age com
+um token pessoal do Samuel, só deste repo. Com o token automático do Actions, o GitHub não
+deixa um workflow disparar outro — é uma trava contra loop. Por isso o token."_
 
 Se perguntarem por que só `participantes/`: _"o repo é público. Auto-merge sem revisão em
 PR que mexe em código ou em workflow é porta aberta."_
@@ -133,25 +133,29 @@ Pegadinha técnica, em uma frase:
 
 O prêmio da interação — o equivalente ao feature flag que a outra equipe fez.
 
-**⚠️ ANTES DE QUALQUER F5: ALGUÉM TEM QUE RODAR O DEPLOY. ELE NÃO RODA SOZINHO.**
-O merge automático é feito pelo robô do Actions, e **push do robô não dispara workflow**
-(regra do GitHub, existe para evitar loop infinito). Os PRs entram na `main` e a página
-fica velha. Isso foi medido no ensaio: o arquivo entrou e a página não mudou.
+**O deploy roda sozinho a cada merge** — o auto-merge age com o token do Samuel, então o
+merge conta como push de pessoa e o `deploy.yml` dispara. Com 30 PRs entrando juntos, ele
+cancela os deploys do meio e publica o último, que já tem todos os nomes.
 
-**E isso vira parte do show, não um problema.** Com a aba já aberta em
-_Actions → deploy → Run workflow_, você clica ao vivo:
+**Antes de pedir o F5, quem opera o telão olha _Actions → deploy_:** o último tem que estar
+verde. Se ainda estiver rodando, são uns 40 segundos — use a frase da esteira, abaixo, para
+cobrir.
 
-> "Falta uma peça. Alguém tem que mandar isso pro ar. Olha só." (clica em **Run workflow**)
-> "Quarenta segundos."
-
-Enquanto roda, troca pro navegador com a página do mural aberta. Dá F5 na tela grande
-enquanto a sala dá F5 no celular.
+Troca pro navegador com a página do mural aberta. Dá F5 na tela grande enquanto a sala dá
+F5 no celular.
 
 > "Abram o link de novo no celular. Dá um F5." (espera 5 segundos, deixa a sala achar o
 > próprio nome) "Esse nome aí apareceu porque o check de vocês ficou verde, o merge
-> aconteceu sozinho, e o deploy que eu disparei agora pegou todos de uma vez. Nenhum de
-> nós quatro subiu arquivo nenhum. Nem sabíamos que
-> vocês existiam quando a gente escreveu esse pipeline."
+> aconteceu sozinho, e o deploy rodou sozinho depois do merge. Nenhum de nós quatro subiu
+> arquivo nenhum. Nem sabíamos que vocês existiam quando a gente escreveu esse pipeline."
+
+**Plano B — se a página não tiver os nomes** (token falhou, deploy não rodou): com a aba
+_Actions → deploy → Run workflow_ aberta, clica ao vivo e **diga a verdade**:
+
+> "O deploy automático não saiu, então eu vou mandar na mão. Olha só." (clica em **Run
+> workflow**) "Quarenta segundos."
+
+O porquê está em [`README.md`](README.md), seção do auto-merge.
 
 E a frase que amarra CI e CD, que é o tema:
 
