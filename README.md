@@ -11,20 +11,31 @@ são os dois pipelines.
 
 ## Participe (é isso que a turma faz na aula)
 
-Você não precisa clonar nada. Dá pra fazer tudo do celular:
+Você não precisa clonar nada. Dá pra fazer tudo do celular, logado no GitHub:
 
-1. **Add file** → **Create new file**
-2. Nome do arquivo: `participantes/seunome.json`
-3. Conteúdo:
-
-```json
-{ "nome": "Seu Nome", "equipe": "sua equipe", "tema": "T0X" }
-```
-
+1. Abra **[este link](https://github.com/SamuVanoni/GCC267-cicd-monorepo/new/main?filename=participantes/seunome.json&value=%7B%0A%20%20%22nome%22%3A%20%22Seu%20Nome%22%2C%0A%20%20%22equipe%22%3A%20%22sua%20equipe%22%2C%0A%20%20%22tema%22%3A%20%22T0X%22%0A%7D%0A)**
+   — é o mesmo do QR do slide 2. Ele abre o editor com o arquivo já preenchido
+2. Toque em **Fork this repository**
+3. Troque `seunome` no nome do arquivo e os seus dados no conteúdo
 4. **Commit changes** → **Propose changes** → **Create pull request**
 
-Se o check ficar verde, o PR entra sozinho e seu nome aparece na página. Se ficar vermelho,
-clique no X → **Details** → role até o fim do log: a linha `Error:` diz o que arrumar.
+O nome do arquivo vai **sem espaço e sem acento** (`participantes/joaosilva.json`), e o
+tema vai de `T01` a `T13`. O conteúdo fica assim:
+
+```json
+{
+  "nome": "Seu Nome",
+  "equipe": "sua equipe",
+  "tema": "T0X"
+}
+```
+
+Abriu o app do GitHub em vez do navegador? **⋯** → **Open in browser**. Chegou sem o link?
+Na página do repo, **Add file** → **Create new file** e siga do passo 2.
+
+Se o check ficar verde, o PR entra sozinho e seu nome aparece na página no próximo deploy.
+Se ficar vermelho, clique no X → **Details** → role até o fim do log: a linha `Error:` diz o
+que arrumar.
 
 ---
 
@@ -40,6 +51,7 @@ participantes/    um .json por pessoa
 .github/workflows/
   ci-ingenuo.yml  o pipeline ruim de propósito
   ci-rapido.yml   o mesmo repo com path filter + cache
+  auto-merge.yml  PR que mexe só em participantes/*.json entra sozinho quando fica verde
   deploy.yml      entrou na main → vai pro ar
 docs/aprofundamento/
   README.md       papéis, linha do tempo e checklist da apresentação
@@ -51,13 +63,13 @@ docs/aprofundamento/
 
 ## Os dois pipelines, que são a aula
 
-|                          | `ci-ingenuo`                        | `ci-rapido`                  |
-| ------------------------ | ----------------------------------- | ---------------------------- |
-| olha o diff?             | não                                 | sim — job `detectar`         |
-| cache                    | nenhum                              | `cache: npm`                 |
-| jobs                     | 1 job × 4 versões de Node, em série | 1 a 3 jobs, só os afetados   |
-| mudar um `.json`         | roda os 3 pacotes, 4 vezes          | roda só o mural              |
-| mudar `packages/shared/` | roda tudo                           | roda tudo — **e está certo** |
+|                          | `ci-ingenuo`                        | `ci-rapido`                                                           |
+| ------------------------ | ----------------------------------- | --------------------------------------------------------------------- |
+| olha o diff?             | não                                 | sim — job `detectar`                                                  |
+| cache                    | nenhum                              | `cache: npm`                                                          |
+| jobs                     | 1 job × 4 versões de Node, em série | 0 a 3 jobs de pacote, só os afetados, mais `detectar`, `lint` e `fim` |
+| mudar um `.json`         | roda os 3 pacotes, 4 vezes          | roda só o mural                                                       |
+| mudar `packages/shared/` | roda tudo                           | roda tudo — **e está certo**                                          |
 
 Os dois rodam no mesmo PR, de propósito: no minuto 20 da apresentação os dois resultados
 estão lado a lado, no mesmo commit. Nenhuma demo ao vivo depende de re-rodar nada.
@@ -74,7 +86,7 @@ npm test              # os 3 pacotes
 npm run build         # gera apps/mural/dist/index.html
 ```
 
-Node 18, 20 ou 22. Sem dependências externas — só a biblioteca padrão.
+Node 18, 20, 22 ou 24. Sem dependências externas — só a biblioteca padrão.
 
 ---
 
@@ -82,10 +94,17 @@ Node 18, 20 ou 22. Sem dependências externas — só a biblioteca padrão.
 
 - **Settings → Pages → Source: GitHub Actions**
 - **Settings → General → Allow auto-merge**
-- **Settings → Rules/Branches → main:** exigir os status checks, **sem** revisão obrigatória
+- **Settings → Rules/Branches → main:** exigir o status check `fim`, **sem** revisão
+  obrigatória
+- **Settings → Actions → General → Approval for running fork pull request workflows from
+  contributors:** _Require approval for first-time contributors who are new to GitHub_
 
 > ⚠️ Exigir um check que o path filter faz **pular** trava o PR para sempre, esperando um
-> job que nunca vai rodar. Exija só `detectar`.
+> job que nunca vai rodar. Exija só o `fim`, o job agregador que sempre roda.
+
+> ⚠️ Todo PR da turma vem de fork. Com a aprovação no padrão do GitHub, os checks de quem
+> nunca contribuiu aqui ficam parados em "Workflow awaiting approval" até alguém clicar em
+> **Approve and run** — o `fim` não fica verde e o auto-merge não acontece.
 
 ---
 

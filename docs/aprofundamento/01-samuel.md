@@ -26,16 +26,20 @@ Passa rápido. O tempo que importa começa no slide 2.
 
 ### Slide 2 — a instrução + QR
 
-> "Antes de eu explicar qualquer coisa, peguem o celular. Aponta a câmera pro QR. Vocês
-> vão cair num repositório nosso. Não precisa clonar nada, não precisa instalar nada —
-> dá pra fazer tudo do celular. Cria um arquivo com o seu nome, do jeito que está aí, e
-> abre um pull request. Leva uns 40 segundos."
+> "Antes de eu explicar qualquer coisa, peguem o celular. Aponta a câmera pro QR. Ele já
+> abre o arquivo pronto, com o modelo dentro. Não precisa clonar nada, não precisa instalar
+> nada. Troca pelos seus dados e abre um pull request. Leva uns 40 segundos."
+
+O QR abre `github.com/.../new/main?filename=participantes/seunome.json&value=...`: o
+editor já vem com o caminho e o JSON preenchidos. Ninguém da turma tem acesso de escrita,
+então o GitHub pede um **fork** antes — é um clique, e o editor volta preenchido.
 
 Depois **repita os três pontos que mais travam**:
 
-1. O arquivo vai na pasta `participantes/` — é só escrever `participantes/` antes do nome,
-   o GitHub cria a pasta sozinho
-2. O nome termina em `.json`
+1. Vai aparecer um botão **Fork this repository**. Clica nele, é normal.
+2. Troca o `seunome` do nome do arquivo **sem espaço e sem acento** — `joaosilva.json`, não
+   `joão silva.json`. Com espaço ou acento o CI passa, mas o auto-merge recusa e o PR fica
+   parado.
 3. No fim tem que clicar em **Create pull request**. Commit não é PR.
 
 E avisa da fila, senão parece que quebrou:
@@ -50,7 +54,11 @@ Esse slide existe pra dar tempo da sala terminar de mandar.
 > vocês mandaram. O Ruan explica por que isso vira um problema quando o projeto tem dois
 > serviços. E o Gilmar mostra o conserto, e uma pegadinha no fim que eu não vou estragar."
 
-A última frase do slide é a mais importante — **fala ela olhando pra sala**:
+Embaixo da tabela fica a faixa **"Travou?"** com os três tropeços mais comuns (Fork que
+não responde, commit sem PR, bolinha amarela). Ela fica na tela enquanto a sala manda —
+aponta pra ela uma vez e segue.
+
+A frase mais importante deste slide não está escrita nele — **fala ela olhando pra sala**:
 
 > "O que vocês mandarem agora é o que vai estar na tela no minuto 20."
 
@@ -70,13 +78,15 @@ da pessoa.
 
 Os travamentos que vão aparecer, em ordem de frequência:
 
-| Sintoma                     | O que é                                                                |
-| --------------------------- | ---------------------------------------------------------------------- |
-| "não achei o Add file"      | está na tela de código do repo, botão verde em cima à direita          |
-| "commitei mas não apareceu" | commitou na main por engano, ou não clicou em Create pull request      |
-| "deu erro de JSON"          | vírgula sobrando na última linha, ou aspas curvas do teclado do iPhone |
-| "não abre o link"           | sem conta no GitHub — manda logar, 1 minuto                            |
-| "o arquivo foi pra raiz"    | esqueceu o `participantes/` antes do nome                              |
+| Sintoma                      | O que é                                                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| "abriu o app do GitHub"      | o app não cria arquivo. **⋯** → **Open in browser**                                                                 |
+| "o botão Fork não faz nada"  | navegador embutido do leitor de QR: abre no navegador de verdade. No Brave, desliga o **Shields** para o github.com |
+| "não abre o link"            | sem conta no GitHub — manda logar, 1 minuto                                                                         |
+| "commitei mas não apareceu"  | não clicou em **Create pull request**                                                                               |
+| "deu erro de JSON"           | vírgula sobrando na última linha, ou aspas curvas do teclado do iPhone                                              |
+| "ficou verde mas não entrou" | nome do arquivo com espaço, acento ou fora de `participantes/`: o auto-merge recusou. Renomeia no próprio PR        |
+| "Workflow awaiting approval" | conta criada há pouco: o GitHub segura os checks. **Approve and run** no PR — você é admin, é com você              |
 
 **Anote mentalmente onde a sala mais travou.** Você vai usar isso no fecho, e é o detalhe
 que mostra que a interação não foi enfeite.
