@@ -62,14 +62,19 @@ dessas etapas. Metade da sala acha que é uma ferramenta.
 
 ## Slide 6 · minutos 07 a 09 · o pipeline que está rodando agora
 
-> "Isso aqui é o pipeline que está julgando os PRs de vocês neste segundo. Dez linhas. Ele
+> "Isso aqui é o pipeline que está julgando os PRs de vocês neste segundo. É curto. Ele
 > baixa o código, instala as dependências e roda os testes. Funciona. E é exatamente o que
 > a gente escreve no primeiro dia de qualquer projeto."
 
-Aponta as duas linhas vermelhas:
+Aponta as três linhas vermelhas:
 
-> "Sem cache, ele baixa as dependências do zero toda vez. E sem filtro: não importa o que
-> você mudou, ele testa os três pacotes. **Guardem essa segunda parte.**"
+> "Sem cache, ele baixa as dependências do zero toda vez. Sem filtro: não importa o que
+> você mudou, ele testa os três pacotes. **Guardem essa parte.** E em série: faz tudo isso
+> em quatro versões de Node, uma depois da outra."
+
+Não explique o `max-parallel: 1` nem a matriz — que as quatro versões são o que multiplica
+o desperdício é o Ruan que mostra no slide 11, e que isso é de propósito é o Gilmar que
+revela no 20.
 
 A frase que planta a semente:
 
@@ -140,7 +145,11 @@ Vai nos 4 passos com a mão no slide, devagar:
 1. Clica no X vermelho → **Details**
 2. Acha o **step vermelho** — os de cima dele passaram
 3. Vai pro **fim** do log
-4. Procura a primeira linha **`Error:`** — a de cima dela diz o arquivo
+4. Acha a linha **`Error:`** — o **`FALHOU`** logo perto dela diz o arquivo e o motivo
+
+No log real o `FALHOU` aparece **embaixo** do `Error:`, não em cima — o `Error:` sai pelo
+stderr e o GitHub o imprime antes. Por isso o slide diz "perto", e não "em cima". Se você
+disser "a linha de cima", quem estiver olhando o próprio log vai procurar no lugar errado.
 
 Aponta o bloco preto da direita:
 

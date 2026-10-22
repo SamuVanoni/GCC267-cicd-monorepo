@@ -99,7 +99,8 @@ Você volta ao palco no minuto 28.
 
 ### Slide 21 — as três conclusões
 
-> "Fecho com três. **Um:** põe `paths` no workflow de vocês hoje. São quatro linhas, e todo
+> "Fecho com três. **Um:** põe um path filter no workflow de vocês hoje. Um workflow por
+> serviço com `paths` são quatro linhas; job por job, o caminho está no material. Todo
 > mundo aqui vai ter dois serviços no mesmo repositório até o Encontro 6. **Dois:** quando
 > der vermelho, não lê o log — lê o fim do log. **Três:** verde é o que vocês ensinaram o
 > robô a conferir, e nada mais."

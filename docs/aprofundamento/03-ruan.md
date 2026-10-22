@@ -39,8 +39,9 @@ E aqui você conecta com o projeto deles, que é o que faz esse tema valer os 15
 ## Slide 10 · minutos 13 a 15 · o que é monorepo
 
 > "Monorepo é simples de explicar: em vez de um repositório por serviço, tudo mora junto.
-> Essa árvore da esquerda é a do nosso projeto, e vai ser parecida com a de todos vocês:
-> dois apps, uma biblioteca que os dois usam, e uma pasta de workflows."
+> Essa árvore da esquerda é a deste repositório que vocês acabaram de mexer, e a de vocês
+> vai ser parecida: dois apps, uma biblioteca que os dois usam, e uma pasta de workflows. A
+> pasta `participantes/` é onde caiu o arquivo de vocês — e quem lê ela é o mural."
 
 Aponta o cartão verde:
 
@@ -95,9 +96,13 @@ difícil, e é o próximo slide."_
 
 **É o slide técnico central do T05.** Se a sala levar uma coisa só daqui, é esta.
 
-> "O conserto cabe em quatro linhas de YAML. Isso aqui se chama **path filter**. Você dá
-> pro job uma lista de pastas que interessam a ele. Se o PR não tocou em nenhuma delas, o
-> job não roda."
+> "Isso aqui se chama **path filter**. A ideia é um job a mais, o `detectar`, que roda
+> primeiro: ele lê o diff do PR — o `git diff` aí em cima — e diz quais pacotes mudaram.
+> Os outros jobs esperam por ele, com o `needs`, e só rodam se o pacote deles estiver na
+> lista, com o `if`."
+
+Aponta as duas metades do código: o `detectar` em cima, o `mural` embaixo. **Não leia o
+YAML linha por linha** — basta a sala ver que um job pergunta e o outro obedece.
 
 Mostra os dois casos de baixo com a mão:
 
@@ -116,13 +121,15 @@ A parte que mostra que você entendeu de verdade — não é só copiar YAML:
 > exigir aquele check pro merge, o PR trava pra sempre esperando um job que nunca vai
 > rodar. É uma pegadinha clássica."
 
-**Se perguntarem pelo caso de vários jobs no mesmo workflow:**
+**Se perguntarem "não tem um jeito mais simples?":**
 
-> "O `paths` do `on` filtra o workflow inteiro. Para filtrar job por job, a gente usa um job
-> que detecta o diff e os outros com `needs` + `if`. Está escrito no material que a gente
-> publicou no repo."
+> "Tem: o `paths` direto no `on` do workflow, quatro linhas. Mas ele filtra o workflow
+> **inteiro** — ou roda tudo, ou nada. Serve se vocês tiverem um workflow por serviço. Com
+> vários jobs no mesmo arquivo, que é o nosso caso, precisa do `detectar`. As duas formas
+> estão no material."
 
-**Não abra esse assunto no palco.** Não cabe em 30 minutos, e está no material.
+**Não abra esse assunto no palco se ninguém perguntar.** O detalhe está em
+[`path-filter-por-job.md`](path-filter-por-job.md).
 
 ---
 
