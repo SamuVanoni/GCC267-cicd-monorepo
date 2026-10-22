@@ -33,7 +33,7 @@ Curto de propósito:
 
 > "Lembram do começo? Vocês mandaram o PR e ficaram esperando. Deu [NÚMERO]. Esse
 > pipeline era **de propósito**. A gente escreveu ele ruim pra vocês sentirem. Agora o mesmo
-> repositório, com as quatro linhas do path filter e a linha do cache que o Ruan mostrou."
+> repositório, com o path filter e o cache que o Ruan mostrou."
 
 **Pausa.** Vai pro próximo slide.
 
@@ -71,7 +71,10 @@ silêncio aqui valem mais que qualquer frase.
 
 Quando terminar:
 
-> "E o que mudou no código foram cinco linhas de YAML. Nenhuma linha de teste foi apagada."
+> "E o que mudou foi só o workflow. Nenhuma linha de teste foi apagada."
+
+**Não diga um número de linhas.** A diferença entre o `ci-ingenuo.yml` e o `ci-rapido.yml`
+é bem mais que "cinco linhas", e alguém pode abrir os dois arquivos.
 
 A frase que fecha o raciocínio, e é a que separa isso de "otimização":
 
@@ -99,12 +102,17 @@ Comece pela frase do título, **de frente pra sala**:
 
 Os três cartões, rápido:
 
-> "São três peças. **Branch protection:** a main recusa PR com check vermelho — e nem eu,
-> que criei o repo, consigo passar por cima. **Auto-merge:** ficou verde, entra sozinho.
-> E **deploy no merge:** entrou na main, vai pro ar."
+> "São três peças. **Branch protection:** a main só aceita PR com o check `fim` verde — é
+> o único exigido, e é um job que roda sempre. **Auto-merge:** PR que mexe só em
+> `participantes/` ficou verde, entra sozinho; ninguém clica em Merge. E **deploy da
+> main:** um workflow gera a página a partir da main e publica."
 
-**Nota para quem fala:** o "deploy no merge" é verdade no desenho, mas na prática quem
-dispara é um clique, no próximo slide — o motivo está lá. **Não prometa "sozinho" aqui.**
+**Nota para quem fala:** o cartão diz "deploy da main", não "deploy no merge", de
+propósito: quem dispara o deploy é um clique, no próximo slide — o motivo está lá. **Não
+prometa "sozinho" aqui.**
+
+Se perguntarem por que só `participantes/`: _"o repo é público. Auto-merge sem revisão em
+PR que mexe em código ou em workflow é porta aberta."_
 
 A ligação com a disciplina — vale dizer porque mostra que vocês leram a ementa:
 

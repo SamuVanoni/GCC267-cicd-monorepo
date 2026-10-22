@@ -111,10 +111,9 @@ Se você exigir um check obrigatório na branch protection e o path filter fizer
 **pular**, o PR fica eternamente "waiting for status to be reported". O job não falhou — ele
 nunca existiu, e o GitHub espera por ele.
 
-Duas saídas:
-
-1. **Exija só o job que sempre roda** (aqui, `detectar`). É o que fizemos.
-2. **Job `fim` que agrega**, e é ele o obrigatório:
+Exigir só o `detectar`, que sempre roda, destrava o PR — mas aí um `mural` vermelho também
+não bloqueia nada, e a branch protection deixa de proteger. A saída é um **job `fim` que
+agrega**, e é ele o único obrigatório. É o que fizemos:
 
 ```yaml
 fim:
@@ -123,7 +122,7 @@ fim:
   runs-on: ubuntu-latest
   steps:
     - run: |
-        if echo '${{ join(needs.*.result, ",") }}' | grep -q failure; then
+        if echo '${{ join(needs.*.result, ",") }}' | grep -qE 'failure|cancelled'; then
           exit 1
         fi
 ```
